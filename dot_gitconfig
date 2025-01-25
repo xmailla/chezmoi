@@ -1,0 +1,99 @@
+[user]
+	name = xmailla
+	email = x@maillard.im
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+
+[core]
+	editor = nano
+	excludesfile = .local/share/git/global.ignore
+	pager = delta
+
+[help]
+	autocorrect = 1
+
+[init]
+	templateDir = ~/.config/git/templates
+
+[interactive]                                                                                                                                                                                                         
+    diffFilter = delta --color-only --features=interactive
+
+[pull]
+	rebase = false
+
+[checkout]
+	defaultRemote = origin
+	
+[alias]
+	find = "!grepalias() { git config --global --get-regexp alias | grep -i \"$1\" | awk -v nr=2 '{sub(/^alias\\./,\"\")};{printf \"\\033[31m%_10s\\033[1;37m\", $1};{sep=FS};{for (x=nr; x<=NF; x++) {printf \"%s%s\", sep, $x; }; print \"\\033[0;39m\"}'; }; grepalias" ; courtesy of @ttscoff
+	ec = config --global -e
+	ig = !sh -c '$EDITOR .gitignore'
+	s = status -sb
+	l = log --color --graph --pretty=format:'%Cred%h%Creset %C(yellow)%d%Creset %Cgreen(%cr)%Creset %s %Cblue<%an>%Creset' --abbrev-commit
+	ll = log --color --graph --pretty=format:'%Cred%h%Creset %C(yellow)%d%Creset %Cgreen%ci (%cr)%Creset %Cblue<%an>%Creset%n%s' --abbrev-commit
+	ls = log --color --graph --stat --pretty=format:'%Cred%h%Creset %C(yellow)%d%Creset %Cgreen%ci (%cr)%Creset %Cblue%an <%ce>%Creset%n%B' --abbrev-commit
+	lp = log --color --graph --stat -p --pretty=format:'%Cred%h%Creset %C(yellow)%d%Creset %Cgreen%ci (%cr)%Creset %Cblue<%an>%Creset%n%B' --abbrev-commit
+	a = add
+	aa = add . --all
+	ap = add --patch
+	c = commit -v
+	ca = commit --amend -v
+	co = checkout
+	ctags = "!sh -c '[ -f .git/hooks/ctags ] || git init; .git/hooks/ctags' git-ctags"
+	i = init
+	ib = init --bare
+	cl = clone
+	d = diff -M --word-diff
+	dc = diff --cached -M
+	au = add -u
+	cm = commit -m
+	cob = checkout -b
+	coB = checkout -B ; auto branch name from ref
+	p = push
+	pu = push -u ; push and set the following remote branch as default push location
+	pom = push origin master
+	pa = push --all ; push all branches
+	par = !sh -c 'git remote | xargs -L1 git push --all' ; push all branches to all remotes
+	pl = pull
+	plom = pull origin master
+	f = fetch --all
+	fo = fetch origin
+	st = stash
+	stp = stash pop
+	sts = stash save
+	stl = stash list
+	sta = stash apply
+	stc = stash clear
+	br = branch -av
+	brd = branch -d
+	brD = branch -D
+	brt = branch --track
+	rb = rebase
+	rbc = rebase --continue
+	rbi = rebase -i
+	rb = rebase -p
+	rmv = remote -v
+	rma = remote add
+	rms = remote show
+	rmsu = remote set-url
+	m = merge
+	rs = reset
+	rss = reset --soft
+	rss = reset --soft HEAD ; unstage working changes
+	rsh = reset --hard
+	rshh = reset --hard HEAD; discard working changes
+	rsho = reset --hard ORIG_HEAD ; undo merge
+	mkbranch = "!f() { git push origin HEAD:refs/heads/$1 && git fetch origin && git branch --track $1 origin/$1 && cd . && git checkout $1; }; f"
+	rmbranch = "!f() { git push origin :refs/heads/$1 && git remote prune origin && git branch -D $1; }; f"
+	mergebranch = "!f() { git checkout master && git merge @{-1}; }; f"
+	up = "!f() { git fetch origin && git rebase origin/master; }; f"
+	nuke = "!f() { git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch "$@"' --prune-empty --tag-name-filter cat -- --all; }; f"
+	acm = "!f() { git add . --all && git status -sb && echo "$@" | git commit -F -; }; f"
+	acmp = "!f() { git add . --all && git status -sb && echo "$@" | git commit -F - && git push; }; f"
+	rdone = "!f() { git add . --all && git status -sb && echo "$@" | git commit -F - && git push; }; f"
+	update = !git pull && git submodule update --init --recursive
+
