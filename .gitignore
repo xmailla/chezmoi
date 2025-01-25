@@ -1,0 +1,8 @@
+seq
+seq.old
+cronsaved
+cur
+seq
+*.swp
+.zsh_history
+.zcompdump

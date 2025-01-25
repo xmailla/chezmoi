@@ -1,0 +1,27 @@
+# Galae
+####################################################################################################
+IMAPAccount galae
+Host mail.galae.net
+User xavier@maillard.im
+PassCmd "security find-generic-password -a xavier@maillard.im -s mblaze-galae -w"
+SSLType IMAPS
+
+IMAPStore galae-remote
+Account galae
+
+MaildirStore galae-local
+Subfolders Verbatim
+# The trailing "/" is important
+Path ~/.local/share/mail/galae/
+Inbox ~/.local/share/mail/galae/INBOX
+
+Channel galae
+Far :galae-remote:
+Near :galae-local:
+# Include everything
+Patterns *
+Sync All
+Create Both
+Remove Both
+Expunge Both
+SyncState *
