@@ -47,6 +47,7 @@
 (show-paren-mode)
 
 (setq custom-safe-themes t)
+(load-theme 'modus-operandi-tinted)
 
 ;;; PACKAGE MANAGER
 (package-initialize)
