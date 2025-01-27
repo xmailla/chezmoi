@@ -1,0 +1,70 @@
+;;; .emacs --- Init file for Emacs                  -*- lexical-binding: t; -*-
+
+;; Copyright (C) 2025 Xavier Maillard
+
+;; Author: Xavier Maillard <x@maillard.im>
+;; Keywords:
+
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <http://www.gnu.org/licenses/>.q
+
+;;; Commentary:
+
+;; Stay as much as possible to vanilla.
+;; 
+;; Exceptions:
+;;   - Howm mode for life and not taking (Am I say how much I dislike Org ?)
+
+;;; Code:
+
+;; REQUIRES ;;
+
+(require 'package)
+(require 'vc)
+
+;; BASICS
+
+;;; UI
+
+(menu-bar-mode -1) ; Clean up UI
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+
+(ido-mode)
+(ido-everywhere)
+
+(column-number-mode)
+(show-paren-mode)
+
+(setq custom-safe-themes t)
+
+; On Mac this is just a must-have
+(setq mac-option-modifier 'none);control, meta, alt, super, or hyper (none = no interpretation)
+(setq mac-command-modifier 'meta)
+
+;;; BACKUPS
+
+(setq backup-by-copying t      ; don't clobber symlinks
+      backup-directory-alist '(("." . "~/.local/share/emacs/backup"))    ; don't litter my fs tree
+      delete-old-versions t
+      kept-new-versions 6
+      kept-old-versions 2
+      version-control t       ; use versioned backups
+      auto-save-file-name-transforms '((".*" "~/.local/share/emacs/backup/" t)))
+
+
+;; HOOKS
+
+; Clean trailing whitespace before saving:
+(add-to-list 'write-file-functions 'delete-trailing-whitespace)
+
