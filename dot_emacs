@@ -21,7 +21,7 @@
 ;;; Commentary:
 
 ;; Stay as much as possible to vanilla.
-;; 
+;;
 ;; Exceptions:
 ;;   - Howm mode for life and not taking (Am I say how much I dislike Org ?)
 
@@ -63,8 +63,15 @@
       auto-save-file-name-transforms '((".*" "~/.local/share/emacs/backup/" t)))
 
 
+;;; MAIL
+
+;; Put my rmail + mail stuff
+
+;;; NOTES TAKING
+
+;; Put my howm stuff here
+
 ;; HOOKS
 
 ; Clean trailing whitespace before saving:
 (add-to-list 'write-file-functions 'delete-trailing-whitespace)
-
