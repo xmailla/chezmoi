@@ -63,6 +63,7 @@
 
 ;;; OTHERS
 (setq user-full-name "Xavier Maillard"
+      user-mail-address "x@maillard.im"
       default-directory "~/"
       create-lockfiles nil
       inhibit-startup-screen t
