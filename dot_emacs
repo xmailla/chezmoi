@@ -45,6 +45,7 @@
 
 (column-number-mode)
 (show-paren-mode)
+(global-hl-line-mode t)
 
 (setq custom-safe-themes t)
 (load-theme 'modus-operandi-tinted)
@@ -112,3 +113,7 @@
 
 ; Clean trailing whitespace before saving:
 (add-to-list 'write-file-functions 'delete-trailing-whitespace)
+
+
+;; FINAL
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
