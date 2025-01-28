@@ -82,6 +82,9 @@
 (setq mac-option-modifier 'none);control, meta, alt, super, or hyper (none = no interpretation)
 (setq mac-command-modifier 'meta)
 
+(fset 'yes-or-no-p 'y-or-n-p)
+(define-key y-or-n-p-map [return] 'act)
+
 ;;; BACKUPS
 
 (setq backup-by-copying t      ; don't clobber symlinks
