@@ -103,7 +103,12 @@
 
 ;;; MAIL
 
-;; Put my rmail + mail stuff
+(setq rmail-delete-after-output t)
+
+
+; Simple et basique: msmtp fait le boulot. FIN
+(setq send-mail-function 'sendmail-send-it)
+(setq sendmail-program (executable-find "msmtp")) ;
 
 ;;; NOTES TAKING
 
@@ -117,3 +122,4 @@
 
 ;; FINAL
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
+;; (setq default-frame-alist '((width . 800) (height . 55) (menu-bar-lines . 1)))
