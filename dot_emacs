@@ -95,6 +95,10 @@
       version-control t       ; use versioned backups
       auto-save-file-name-transforms '((".*" "~/.local/share/emacs/backup/" t)))
 
+;;; POUBELLE
+
+(setq delete-by-moving-to-trash t
+      trash-directory "~/.Trash/") ; MacOS
 
 ;;; MAIL
 
