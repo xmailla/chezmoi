@@ -103,6 +103,7 @@
 
 ;;; MAIL
 
+(defvar my/rmail-folder (expand-file-name "~/.local/share/mail/"))
 (defvar my/inmail-folder (expand-file-name "~/.local/share/mail/in/"))
 (defvar my/dl-folder (expand-file-name "~/.local/cache/emacs/"))
 
@@ -110,7 +111,6 @@
 (setq rmail-preserve-inbox nil)
 
 (setq rmail-remote-password-required t)
-(setq rmail-primary-inbox-list '("po:xavier%40maillard.im:mail.galae.net:995")) ; ~/.mu_ticket ?
 (setq rmail-file-name (expand-file-name "inbox.rmail" my/inmail-folder))
 
 ;; Tricking the system

@@ -1,0 +1,9 @@
+
+defaults
+    tls on
+    delivery mbox /var/mail/x
+
+account galae
+    host mail.galae.net
+    user xavier@maillard.im
+    passwordeval security find-generic-password -a xavier@maillard.im -s mblaze-galae -w
