@@ -157,7 +157,19 @@
 
 ;;; NOTES TAKING
 
-;; Put my howm stuff here
+(require 'howm)
+(setq howm-view-use-grep t)
+(setq howm-view-grep-command "rg")
+(setq howm-view-grep-option "-nH --no-heading --color never")
+(setq howm-view-grep-extended-option nil)
+(setq howm-view-grep-fixed-option "-F")
+(setq howm-view-grep-expr-option nil)
+(setq howm-view-grep-file-stdin-option nil)
+:config
+;; Where to store data.
+(setq howm-directory "~/Documents/howm")
+(setq howm-home-directory howm-directory)
+
 
 ;; HOOKS
 
