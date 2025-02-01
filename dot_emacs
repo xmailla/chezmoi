@@ -179,6 +179,33 @@
 (add-hook 'emacs-lisp-mode-hook (lambda () (setq mode-name "E")))
 (add-hook 'lisp-interaction-mode-hook (lambda () (setq mode-name "LI")))
 
+;;; BINDINGS
+(global-set-key (kbd "C-x C-c") nil) ;; Je fais trop d'erreurs...
+(global-set-key (kbd "C-x C-c C-c") 'save-buffers-kill-emacs)
+(global-set-key (kbd "C-x C-d") nil) ; never use it
+(global-set-key (kbd "C-x C-v") nil) ; never use it
+(global-set-key (kbd "C-z") nil) ; I have a window manager, thanks!
+(global-set-key  (kbd "C-x C-z") nil) ; same idea as above
+(global-set-key (kbd "C-x C-c") nil) ; avoid accidentally exiting Emacs
+
+(global-set-key (kbd "C-x C-r") 'restart-emacs) ; override `find-file-read-only'
+(global-set-key (kbd "C-h h") nil) ; Never show that "hello" file
+(global-set-key (kbd "M-`") nil)
+(global-set-key (kbd "M-o") 'delete-blank-lines) ; alias for C-x C-o
+(global-set-key (kbd "M-SPC") 'cycle-spacing)
+(global-set-key (kbd "M-z") 'zap-up-to-char) ; NOT `zap-to-char'
+(global-set-key (kbd "M-c") 'capitalize-dwim)
+(global-set-key (kbd "M-l")  'downcase-dwim) ; "lower" case
+(global-set-key (kbd "M-u") 'upcase-dwim)
+(global-set-key (kbd "M-=") 'count-words)
+(global-set-key (kbd "C-x O") 'next-multiframe-window)
+(global-set-key (kbd "C-h K") 'describe-keymap) ; overrides `Info-goto-emacs-key-command-node'
+(global-set-key (kbd "C-h u") 'apropos-user-option)
+(global-set-key (kbd "C-h F") 'apropos-function) ; lower case is `describe-function'
+(global-set-key (kbd "C-h V") 'apropos-variable) ; lower case is `describe-variable'
+(global-set-key (kbd "C-h L") 'apropos-library) ; lower case is `view-lossage'
+(global-set-key (kbd "C-h c") 'describe-char) ; overrides `describe-key-briefly'
+
 ;; FINAL
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 ;; (setq default-frame-alist '((width . 800) (height . 55) (menu-bar-lines . 1)))
