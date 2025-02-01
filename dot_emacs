@@ -3,7 +3,6 @@
 ;; Copyright (C) 2025 Xavier Maillard
 
 ;; Author: Xavier Maillard <x@maillard.im>
-;; Keywords:
 ;; Keywords: vanilla, emacs
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -178,6 +177,8 @@
 
 (add-hook 'emacs-lisp-mode-hook (lambda () (setq mode-name "E")))
 (add-hook 'lisp-interaction-mode-hook (lambda () (setq mode-name "LI")))
+(add-hook 'after-init-hook 'global-auto-revert-mode)
+(add-hook 'after-init-hook 'delete-selection-mode)
 
 ;;; BINDINGS
 (global-set-key (kbd "C-x C-c") nil) ;; Je fais trop d'erreurs...
@@ -208,4 +209,10 @@
 
 ;; FINAL
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
+
+(require 'server)
+(setq server-client-instructions nil)
+(unless (server-running-p)
+  (server-start)))
+
 ;; (setq default-frame-alist '((width . 800) (height . 55) (menu-bar-lines . 1)))
