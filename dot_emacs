@@ -4,6 +4,7 @@
 
 ;; Author: Xavier Maillard <x@maillard.im>
 ;; Keywords:
+;; Keywords: vanilla, emacs
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -36,6 +37,7 @@
 
 ;;; UI
 
+;; I do not use graphical elements
 (menu-bar-mode -1) ; Clean up UI
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
