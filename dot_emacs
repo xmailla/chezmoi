@@ -116,6 +116,14 @@
 
 (theme-buffet-timer-hours 1)
 
+;;;; Fontaine: https://protesilaos.com/emacs/fontaine
+(require 'fontaine)
+(setq fontaine-latest-state-file
+      (expand-file-name "~/.local/state/fontaine-latest.state"))
+(fontaine-set-preset (or (fontaine-restore-latest-preset) 'regular))
+(define-key global-map (kbd "C-c f") #'fontaine-set-preset)
+(fontaine-mode 1)
+
 ;;; PACKAGE MANAGER
 (package-initialize)
 
