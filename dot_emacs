@@ -24,6 +24,7 @@
 ;;
 ;; Exceptions:
 ;;   - Howm mode for life and not taking (Am I say how much I dislike Org ?)
+;;   - Various modules by Prot
 
 ;;; Code:
 
@@ -33,6 +34,12 @@
 (require 'vc)
 
 ;; BASICS
+;;; Load recurisvely all directories containing .el files under `user-emacs-directory'/elisp
+(let* ((path (expand-file-name "elisp" user-emacs-directory))
+         (local-pkgs (mapcar 'file-name-directory (directory-files-recursively path "\\.el$"))))
+    (if (file-accessible-directory-p path)
+        (mapc (apply-partially 'add-to-list 'load-path) local-pkgs)
+      (make-directory path :parents)))
 
 ;;; UI
 
