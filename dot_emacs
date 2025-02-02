@@ -55,6 +55,7 @@
 (show-paren-mode)
 (global-hl-line-mode t)
 
+;;; Prot is in Da Place (thank you Prot!!)
 (setq custom-safe-themes t)
 (load-theme 'modus-operandi-tinted)
 
