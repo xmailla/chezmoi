@@ -124,6 +124,13 @@
 (define-key global-map (kbd "C-c f") #'fontaine-set-preset)
 (fontaine-mode 1)
 
+;; Pas sûr
+(require 'face-remap)
+(define-key global-map (kbd "C-x x v") 'variable-pitch-mode)
+(define-key global-map (kbd "C-x C-=") 'global-text-scale-adjust)
+(define-key global-map (kbd "C-x C-+") 'global-text-scale-adjust)
+(define-key global-map (kbd "C-x C-0") 'global-text-scale-adjust)
+
 ;;; PACKAGE MANAGER
 (package-initialize)
 
