@@ -73,6 +73,11 @@
 (global-set-key (kbd "C-x l") 'pulsar-pulse-line)
 (global-set-key (kbd "C-x L") 'pulsar-highlight-dwim)
 
+;; lin: https://protesilaos.com/emacs/lin
+(require 'lin)
+(setq lin-face 'lin-cyan)
+(add-hook 'after-init-hook 'lin-global-mode)
+
 ;;; PACKAGE MANAGER
 (package-initialize)
 
