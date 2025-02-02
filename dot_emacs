@@ -104,6 +104,18 @@
            :mode-line-inactive spacious-padding-subtle-mode-line-inactive))
 (add-hook 'after-init-hook 'spacious-padding-mode)
 
+;;;; theme-buffet
+(require 'theme-buffet)
+;;;; (featurep 'modus-themes)
+(setq theme-buffet-menu 'end-user)
+(setq theme-buffet-end-user
+            '( :night     (modus-vivendi modus-vivendi-tinted modus-vivendi-tritanopia modus-vivendi-deuteranopia)
+               :morning   (modus-operandi modus-operandi-tinted modus-operandi-tritanopia modus-operandi-deuteranopia)
+               :afternoon (modus-operandi modus-operandi-tinted modus-operandi-tritanopia modus-operandi-deuteranopia)
+               :evening   (modus-vivendi modus-vivendi-tinted modus-vivendi-tritanopia modus-vivendi-deuteranopia)))
+
+(theme-buffet-timer-hours 1)
+
 ;;; PACKAGE MANAGER
 (package-initialize)
 
