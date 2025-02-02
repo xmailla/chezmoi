@@ -278,7 +278,6 @@
 (global-set-key (kbd "C-x C-v") nil) ; never use it
 (global-set-key (kbd "C-z") nil) ; I have a window manager, thanks!
 (global-set-key  (kbd "C-x C-z") nil) ; same idea as above
-(global-set-key (kbd "C-x C-c") nil) ; avoid accidentally exiting Emacs
 
 (global-set-key (kbd "C-x C-r") 'restart-emacs) ; override `find-file-read-only'
 (global-set-key (kbd "C-h h") nil) ; Never show that "hello" file
@@ -304,6 +303,6 @@
 (require 'server)
 (setq server-client-instructions nil)
 (unless (server-running-p)
-  (server-start)))
+  (server-start))
 
 ;; (setq default-frame-alist '((width . 800) (height . 55) (menu-bar-lines . 1)))
