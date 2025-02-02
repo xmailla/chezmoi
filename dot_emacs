@@ -235,6 +235,8 @@
 (setq sendmail-program (executable-find "msmtp")) ;
 
 ;;; NOTES TAKING
+(add-to-list 'load-path "~/Git/Projets/records/src")
+(require 'records)
 
 (require 'howm)
 (setq howm-view-use-grep t)
