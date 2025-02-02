@@ -78,6 +78,24 @@
 (setq lin-face 'lin-cyan)
 (add-hook 'after-init-hook 'lin-global-mode)
 
+;;;; curosry: https://protesilaos.com/emacs/cursory
+(require 'cursory)
+
+;; Check the `cursory-presets' for how to set your own preset styles.
+
+(setq cursory-latest-state-file
+      (expand-file-name "~/.local/state/emacs/cursory-latest.state"))
+
+;; Set last preset or fall back to desired style from `cursory-presets'.
+(cursory-set-preset (or (cursory-restore-latest-preset) 'bar))
+
+;; Arrange to keep track of the latest Cursory preset.
+(cursory-mode 1)
+
+;; We have to use the "point" mnemonic, because C-c c is often the
+;; suggested binding for `org-capture'.
+(define-key global-map (kbd "C-c p") #'cursory-set-preset)
+
 ;;; PACKAGE MANAGER
 (package-initialize)
 
