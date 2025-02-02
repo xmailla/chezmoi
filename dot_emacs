@@ -59,6 +59,20 @@
 (setq custom-safe-themes t)
 (load-theme 'modus-operandi-tinted)
 
+;; pulsar: https://protesilaos.com/emacs/pulsar
+(require 'pulsar)
+(setopt pulsar-pulse t
+          pulsar-delay 0.055
+          pulsar-iterations 10
+          pulsar-face 'pulsar-green
+          pulsar-highlight-face 'pulsar-magenta)
+
+(pulsar-global-mode 1)
+(add-hook 'next-error-hook '(pulsar-pulse-line-red pulsar-recenter-top pulsar-reveal-entry))
+(add-hook 'minibuffer-setup-hook 'pulsar-pulse-line-red)
+(global-set-key (kbd "C-x l") 'pulsar-pulse-line)
+(global-set-key (kbd "C-x L") 'pulsar-highlight-dwim)
+
 ;;; PACKAGE MANAGER
 (package-initialize)
 
