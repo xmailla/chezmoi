@@ -268,7 +268,7 @@
 ;; HOOKS
 
 ; Clean trailing whitespace before saving:
-(add-to-list 'write-file-functions 'delete-trailing-whitespace)
+;; (add-to-list 'write-file-functions 'delete-trailing-whitespace)
 
 (add-hook 'emacs-lisp-mode-hook (lambda () (setq mode-name "E")))
 (add-hook 'lisp-interaction-mode-hook (lambda () (setq mode-name "LI")))
