@@ -322,7 +322,7 @@
   (define-key map (kbd "i w") #'diary-insert-weekly-entry)
   (define-key map (kbd "i y") #'diary-insert-yearly-entry)
   (define-key map (kbd "M-n") #'calendar-forward-month)
-  (define-key map (kbd "M-p") #'calendar-backward-month)))
+  (define-key map (kbd "M-p") #'calendar-backward-month))
 
 (let ((map diary-mode-map))
   (define-key map (kbd "<M-return>") #'prot-diary-newline-indent)
@@ -335,7 +335,7 @@
   (define-key map (kbd "C-c d d") #'prot-diary-display-entries)
   (define-key map (kbd "C-c d e") #'prot-diary-edit-diary)
   (define-key map (kbd "C-c d i") #'prot-diary-insert-entry)
-  (define-key map (kbd "C-c d m") #'prot-diary-mail-entries)))
+  (define-key map (kbd "C-c d m") #'prot-diary-mail-entries))
 
 ;; which-key
 (require 'which-key)
