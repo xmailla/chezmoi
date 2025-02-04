@@ -254,6 +254,89 @@
 (setq howm-home-directory howm-directory)
 
 ;; MODES
+;; Life
+;; (info "(emacs) Calendar/Diary")
+(require 'calendar)
+(require 'diary-lib)
+(require 'french-holidays)
+(require 'appt)
+(require 'prot-diary)
+
+(setq diary-file (format-time-string "~/.local/share/emacs/life/diary-%Y"))
+(setq diary-display-function #'diary-fancy-display)
+(setq diary-date-forms diary-iso-date-forms)
+(setq diary-comment-start ";;")
+(setq diary-comment-end "")
+(setq diary-nonmarking-symbol "!")
+
+(setq diary-header-line-format nil)
+(setq diary-list-include-blanks nil)
+(setq diary-number-of-entries 2)
+(setq diary-mail-days 2)
+(setq diary-abbreviated-year-flag nil)
+
+(add-hook 'diary-list-entries-hook #'diary-include-other-diary-files)
+(add-hook 'diary-mark-entries-hook 'diary-mark-included-diary-files)
+(add-hook 'diary-list-entries-hook #'diary-sort-entries t)
+(add-hook 'calendar-today-visible-hook #'calendar-mark-today)
+
+(setq calendar-mode-line-format nil)
+(setq calendar-time-display-form
+      '(24-hours ":" minutes
+                 (when time-zone
+                   (format "(%s)" time-zone))))
+
+(setq calendar-date-style 'iso)
+(setq calendar-date-display-form calendar-iso-date-display-form)
+(setq calendar-time-zone-style 'numeric) 
+(setq calendar-week-start-day 1  	; lundi
+      calendar-day-name-array ["Dimanche" "Lundi" "Mardi" "Mercredi"
+                               "Jeudi" "Vendredi" "Samedi"]
+      calendar-month-name-array ["Janvier" "Février" "Mars" "Avril" "Mai"
+                                 "Juin" "Juillet" "Août" "Septembre"
+                                 "Octobre" "Novembre" "Décembre"])
+(setq calendar-holidays holiday-french-holidays)
+(setq diary-show-holidays-flag t)
+(setq diary-date-forms diary-american-date-forms)
+(setq calendar-mark-diary-entries-flag t
+      calendar-mark-holidays-flag t)	; affiche automatiquement les entrées diary et les vacances dans calendar
+
+(setq appt-display-diary nil)
+(setq appt-disp-window-function #'appt-disp-window)
+(setq appt-display-mode-line t)
+(setq appt-display-interval 3)
+(setq appt-audible nil)
+(setq appt-warning-time-regexp "appt \\([0-9]+\\)")
+(setq appt-message-warning-time 15)
+(appt-activate 1)
+
+(let ((map calendar-mode-map))
+  (define-key map (kbd "s") #'calendar-sunrise-sunset)
+  (define-key map (kbd "l") #'lunar-phases)
+  (define-key map (kbd "i") nil) ; Org sets this, much to my chagrin
+  (define-key map (kbd "i a") #'diary-insert-anniversary-entry)
+  (define-key map (kbd "i c") #'diary-insert-cyclic-entry)
+  (define-key map (kbd "i d") #'diary-insert-entry) ; for current "day"
+  (define-key map (kbd "i i") #'diary-insert-entry) ; most common action, easier to type
+  (define-key map (kbd "i m") #'diary-insert-monthly-entry)
+  (define-key map (kbd "i w") #'diary-insert-weekly-entry)
+  (define-key map (kbd "i y") #'diary-insert-yearly-entry)
+  (define-key map (kbd "M-n") #'calendar-forward-month)
+  (define-key map (kbd "M-p") #'calendar-backward-month)))
+
+(let ((map diary-mode-map))
+  (define-key map (kbd "<M-return>") #'prot-diary-newline-indent)
+  (define-key map (kbd "M-n") #'prot-diary-heading-next)
+  (define-key map (kbd "M-p") #'prot-diary-heading-previous)
+  (define-key map (kbd "C-c C-a") #'prot-diary-align-timestamped-entries))
+(let ((map global-map))
+  (define-key map (kbd "C-c d a") #'prot-diary-insert-appointment)
+  (define-key map (kbd "C-c d c") #'calendar)
+  (define-key map (kbd "C-c d d") #'prot-diary-display-entries)
+  (define-key map (kbd "C-c d e") #'prot-diary-edit-diary)
+  (define-key map (kbd "C-c d i") #'prot-diary-insert-entry)
+  (define-key map (kbd "C-c d m") #'prot-diary-mail-entries)))
+
 ;; which-key
 (require 'which-key)
 (add-hook 'after-init-hook 'which-key-mode)
