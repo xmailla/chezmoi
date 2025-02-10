@@ -361,6 +361,10 @@
 ;;; BINDINGS
 (global-set-key (kbd "C-x C-c") nil) ;; Je fais trop d'erreurs...
 (global-set-key (kbd "C-x C-c C-c") 'save-buffers-kill-emacs)
+
+(global-set-key (kbd "C-x C-m") 'execute-extended-command) ; vu dans effective emacs
+(global-set-key (kbd "C-c C-m") 'execute-extended-command) ; ... idem en cas d'erreur ;)
+
 (global-set-key (kbd "C-x C-d") nil) ; never use it
 (global-set-key (kbd "C-x C-v") nil) ; never use it
 (global-set-key (kbd "C-z") nil) ; I have a window manager, thanks!
