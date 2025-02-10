@@ -248,10 +248,12 @@
 (setq howm-view-grep-fixed-option "-F")
 (setq howm-view-grep-expr-option nil)
 (setq howm-view-grep-file-stdin-option nil)
-:config
+
 ;; Where to store data.
 (setq howm-directory "~/Documents/howm")
 (setq howm-home-directory howm-directory)
+(setq howm-keyword-file (expand-file-name ".howm-keys" howm-home-directory))
+(setq howm-history-file (expand-file-name ".howm-history" howm-home-directory))
 
 ;; MODES
 ;; Life
