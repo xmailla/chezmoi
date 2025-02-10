@@ -254,6 +254,7 @@
 (setq howm-home-directory howm-directory)
 (setq howm-keyword-file (expand-file-name ".howm-keys" howm-home-directory))
 (setq howm-history-file (expand-file-name ".howm-history" howm-home-directory))
+(setq howm-menu-lang "en")
 
 ;; counsel-rg for howm
 (defun howm-list--counsel-rg (match)
