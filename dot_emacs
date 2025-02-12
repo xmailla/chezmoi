@@ -100,6 +100,22 @@
   (recentf-max-menu-items 20)
   (recentf-max-saved-items 20)
 
+  :config
+  ;; Ido ( instead of ivy & counsel & swiper)
+  (setq-default ido-auto-merge-work-directories-length -1
+	            ido-enable-flex-matching t
+	            isearch-lazy-count t
+	            lazy-count-prefix-format "%s/%s: ")
+  (setq completion-ignored-extensions '(".o" ".elc" "~" ".bin" ".bak" ".obj" ".map" ".a" ".ln" ".class")
+        completion-styles '(basic flex)
+        completion-auto-select t ;; Show completion on first call
+        completion-auto-help 'visible ;; Display *Completions* upon first request
+        completions-format 'one-column ;; Use only one column
+        completions-sort 'historical ;; Order based on minibuffer history
+        completions-max-height 20 ;; Limit completions to 15 (completions start at line 5)
+        completion-ignore-case t)
+
+
   :init
   ;; Je n'utilise pas les éléments graphiques
   (menu-bar-mode -1) ; ni barre de menu
@@ -131,6 +147,40 @@
   (desktop-save-mode)
   (desktop-read)
 
+  (fido-mode t)
+
+  :bind (
+         ("C-x C-c" . nil)              ; beaucoup trop d'erreurs
+         ("C-x C-c C-c" . save-buffers-kill-emacs) ; beaucoup mieux
+
+         ;; Effective Emacs
+         ("C-x C-m" . execute-extended-command) ; très malin, Alt-x est trop dépendant de l'OS
+         ("C-c C-m" . execute-extended-command) ; solution de secours
+
+         ;; NIL
+         ("C-x C-d" . nil) ; never use it
+         ("C-x C-v" . nil) ; never use it
+         ("C-z" . nil) ; I have a window manager, thanks!
+         ("C-x C-z" . nil) ; same idea as above
+         ("C-h h" . nil) ; Never show that "hello" file
+         ("M-`" . nil)
+
+         ("C-x C-r" . restart-emacs) ; override `find-file-read-only'
+         ("M-o" . delete-blank-lines) ; alias for C-x C-o
+         ("M-SPC" . cycle-spacing)
+         ("M-z" . zap-up-to-char) ; NOT `zap-to-char'
+         ("M-c" . capitalize-dwim)
+         ("M-l" . downcase-dwim) ; "lower" case
+         ("M-u" . upcase-dwim)
+         ("M-=" . count-words)
+         ("C-x O" . next-multiframe-window)
+         ("C-h K" . describe-keymap) ; overrides `Info-goto-emacs-key-command-node'
+         ("C-h u" . apropos-user-option)
+         ("C-h F" . apropos-function) ; lower case is `describe-function'
+         ("C-h V" . apropos-variable) ; lower case is `describe-variable'
+         ("C-h L" . apropos-library) ; lower case is `view-lossage'
+         ("C-h c" . describe-char) ; overrides `describe-key-briefly'
+         )
   )
 
 
