@@ -96,6 +96,9 @@
   (tab-width 4 "Always tab 4 spaces.")
   (indent-tabs-mode t "Défaut mais pour rappel.")
 
+  ;; recentf
+  (recentf-max-menu-items 20)
+  (recentf-max-saved-items 20)
 
   :init
   ;; Je n'utilise pas les éléments graphiques
@@ -121,6 +124,8 @@
   (global-auto-revert-mode t)           ; basculer à la demande sur des versions éditées ailleurs que dans emacs si le cas se présente
   (savehist-mode)                       ; sauvegarde de l'historique du minibuffer
 
+  (save-place-mode 1)
+  (recentf-mode 1)
   ;; (set-frame-font "Iosevka Semibold 12" nil t) ;; font of the century
 
   (desktop-save-mode)
