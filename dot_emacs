@@ -260,52 +260,12 @@
 (define-key global-map (kbd "C-x C-+") 'global-text-scale-adjust)
 (define-key global-map (kbd "C-x C-0") 'global-text-scale-adjust)
 
-;;; PACKAGE MANAGER
-(package-initialize)
-
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-
-(when (< emacs-major-version 29)
-  (unless (package-installed-p 'use-package)
-    (unless package-archive-contents
-      (package-refresh-contents))
-    (package-install 'use-package)))
-
-
-;;; OTHERS
-(setq user-full-name "Xavier Maillard"
-      user-mail-address "x@maillard.im"
-      default-directory "~/"
-      create-lockfiles nil
-      inhibit-startup-screen t
-      eshell-banner-message ""
-      ido-auto-merge-work-directories-length -1 ; disable auto directory switching in IDO
-      bookmark-save-flag 1 ; save bookmarks after every change/new bookmark
-      ido-use-filename-at-point 'guess  ; Use find-file-at-point whenever theres a file at point
-      inhibit-eol-conversion nil
-      dired-dwim-target t  ; make dired target default to the next dired window (eg to copy files between windows)
-      dired-isearch-filenames t  ; make isearch only search filenames in dired buffers
-      dired-listing-switches "-al --group-directories-first"
-      shr-discard-aria-hidden t  ; don't render "hidden" tags on webpages
-      search-default-mode t) ; Default to regex search
-
-; On Mac this is just a must-have
+                                        ; On Mac this is just a must-have
 (setq mac-option-modifier 'none);control, meta, alt, super, or hyper (none = no interpretation)
 (setq mac-command-modifier 'meta)
 
-(fset 'yes-or-no-p 'y-or-n-p)
+
 (define-key y-or-n-p-map [return] 'act)
-
-;;; BACKUPS
-
-(setq backup-by-copying t      ; don't clobber symlinks
-      backup-directory-alist '(("." . "~/.local/share/emacs/backup"))    ; don't litter my fs tree
-      delete-old-versions t
-      kept-new-versions 6
-      kept-old-versions 2
-      version-control t       ; use versioned backups
-      auto-save-file-name-transforms '((".*" "~/.local/share/emacs/backup/" t)))
-
 ;;; POUBELLE
 
 (setq delete-by-moving-to-trash t
