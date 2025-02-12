@@ -501,52 +501,164 @@
 (add-hook 'after-init-hook 'global-auto-revert-mode)
 (add-hook 'after-init-hook 'delete-selection-mode)
 
-;;; BINDINGS
-(global-set-key (kbd "C-x C-c") nil) ;; Je fais trop d'erreurs...
-(global-set-key (kbd "C-x C-c C-c") 'save-buffers-kill-emacs)
+                                        ; (use-package vertico }
+                                        ;   :config (vertico-mode)) }
 
-(global-set-key (kbd "C-x C-m") 'execute-extended-command) ; vu dans effective emacs
-(global-set-key (kbd "C-c C-m") 'execute-extended-command) ; ... idem en cas d'erreur ;)
+                                        ; (use-package marginalia }
+                                        ;   :demand }
+                                        ;   :config (marginalia-mode) }
+                                        ;   :bind (:map minibuffer-local-map }
+                                        ;               ("M-A" . marginalia-cycle))) }
 
-(global-set-key (kbd "C-x C-d") nil) ; never use it
-(global-set-key (kbd "C-x C-v") nil) ; never use it
-(global-set-key (kbd "C-z") nil) ; I have a window manager, thanks!
-(global-set-key  (kbd "C-x C-z") nil) ; same idea as above
+                                        ; (use-package orderless }
+                                        ;   :custom }
+                                        ;   (completion-styles '(orderless basic))) }
 
-(global-set-key (kbd "C-x C-r") 'restart-emacs) ; override `find-file-read-only'
-(global-set-key (kbd "C-h h") nil) ; Never show that "hello" file
-(global-set-key (kbd "M-`") nil)
-(global-set-key (kbd "M-o") 'delete-blank-lines) ; alias for C-x C-o
-(global-set-key (kbd "M-SPC") 'cycle-spacing)
-(global-set-key (kbd "M-z") 'zap-up-to-char) ; NOT `zap-to-char'
-(global-set-key (kbd "M-c") 'capitalize-dwim)
-(global-set-key (kbd "M-l")  'downcase-dwim) ; "lower" case
-(global-set-key (kbd "M-u") 'upcase-dwim)
-(global-set-key (kbd "M-=") 'count-words)
-(global-set-key (kbd "C-x O") 'next-multiframe-window)
-(global-set-key (kbd "C-h K") 'describe-keymap) ; overrides `Info-goto-emacs-key-command-node'
-(global-set-key (kbd "C-h u") 'apropos-user-option)
-(global-set-key (kbd "C-h F") 'apropos-function) ; lower case is `describe-function'
-(global-set-key (kbd "C-h V") 'apropos-variable) ; lower case is `describe-variable'
-(global-set-key (kbd "C-h L") 'apropos-library) ; lower case is `view-lossage'
-(global-set-key (kbd "C-h c") 'describe-char) ; overrides `describe-key-briefly'
-
-
-;;; Completion & UI
-(setf completion-styles '(basic flex)
-      completion-auto-select t ;; Show completion on first call
-      completion-auto-help 'visible ;; Display *Completions* upon first request
-      completions-format 'one-column ;; Use only one column
-      completions-sort 'historical ;; Order based on minibuffer history
-      completions-max-height 20 ;; Limit completions to 15 (completions start at line 5)
-      completion-ignore-case t)
+(use-package consult
+  :bind (("C-c M-x" . consult-mode-command)
+         ("C-c i" . consult-info)
+         ([remap repeat-complex-command] . consult-complex-command)
+         ([remap switch-to-buffer] . consult-buffer)
+         ([remap bookmark-jump] . consult-bookmark)
+         ([remap project-switch-to-buffer] . consult-project-buffer)
+         ("s-t" . consult-register-load)
+         ("s-T" . consult-register-store)
+         ("C-s-t" . consult-register)
+         ([remap yank-pop] . consult-yank-pop)
+         ("M-g e" . consult-compile-error)
+         ("M-g f" . consult-flymake)
+         ([remap goto-line] . consult-goto-line)
+         ("M-g o" . consult-outline)
+         ("M-g m" . consult-mark)
+         ("M-g k" . consult-global-mark)
+         ("M-g i" . consult-imenu)
+         ("M-g I" . consult-imenu-multi)
+         ("M-s d" . consult-find)
+         ("M-s D" . consult-locate)
+         ("M-s g" . consult-grep)
+         ("M-s G" . consult-git-grep)
+         ("M-s r" . consult-ripgrep)
+         ("M-s l" . consult-line)
+         ("M-s L" . consult-line-multi)
+         ("M-s k" . consult-keep-lines)
+         ("M-s u" . consult-focus-lines)
+         ("M-s e" . consult-isearch-history)
+         :map isearch-mode-map
+         ([remap isearch-edit-string] . consult-isearch-history)
+         ("M-s l" . consult-line)
+         ("M-s L" . consult-line-multi)
+         :map minibuffer-local-map
+         ("M-s" . consult-history)
+         ("M-r" . consult-history))
+  :hook (completion-list-mode . consult-preview-at-point-mode)
+  :init
+  (setq register-preview-delay 0.5
+        register-preview-function #'consult-register-format)
+  (advice-add #'register-preview :override #'consult-register-window)
+  (setq xref-show-xrefs-function #'consult-xref
+        xref-show-definitions-function #'consult-xref)
+  :config
+  (consult-customize
+   consult-theme :preview-key '(:debounce 0.2 any)
+   consult-ripgrep consult-git-grep consult-grep
+   consult-bookmark consult-recent-file consult-xref
+   consult--source-bookmark consult--source-file-register
+   consult--source-recent-file consult--source-project-recent-file
+   :preview-key '(:debounce 0.4 any))
+  (setq consult-narrow-key "<")
+  (setq completion-in-region-function
+        (lambda (&rest args)
+          (apply (if vertico-mode
+                     #'consult-completion-in-region
+                   #'completion--in-region)
+                 args))))
 
 ;; FINAL
-(add-to-list 'default-frame-alist '(fullscreen . maximized))
+;; (add-to-list 'default-frame-alist '(fullscreen . maximized))
+                                        ; (require 'nano)                         ;\!;\ }
+
+;; (load-file "~/.emacs.d/elisp/nano256.el")
+;; (add-to-list 'default-frame-alist '(fullscreen . maximized))
+
+;; ibuffer
+(use-package ibuffer
+  :init (defalias 'list-buffers 'ibuffer))
+
+
+;; Line Number
+;; this package introduced in Emacs 26, so only enabled when 26+
+(use-package display-line-numbers
+  :if (> emacs-major-version 26)
+  :hook (prog-mode . display-line-numbers-mode))
+
+;; Parentheses
+(use-package paren
+  :ensure nil
+  :config (setq-default show-paren-style 'mixed
+                        show-paren-when-point-inside-paren t
+                        show-paren-when-point-in-periphery t)
+  :hook (prog-mode . show-paren-mode))
+
+
+;; Diminish Builtins
+(dolist (elem '(abbrev-mode eldoc-mode))
+  (diminish elem))
+(add-hook 'hs-minor-mode-hook (lambda () (diminish 'hs-minor-mode)))
+
+(use-package format-all
+  :diminish " Fmt."
+  :init (add-hook 'prog-mode-hook 'format-all-mode))
+(use-package crux)
+
+;; (global-set-key (kbd "C-c ,") #'crux-find-user-init-file)	; Open Settings
+;; (global-set-key (kbd "C-c r") 'recentf-open-files) ; Open Recent Files
+
+;; Window Move
+(global-set-key (kbd "C-c <left>") 'windmove-left)
+(global-set-key (kbd "C-c <right>") 'windmove-right)
+(global-set-key (kbd "C-c <up>") 'windmove-up)
+(global-set-key (kbd "C-c <down>") 'windmove-down)
+
+;;; Code Editing ------------------------------
+;; Comments（As C-x C-; is for comment-line, keep the postfix）
+;; (global-set-key (kbd "C-c C-;") #'comment-or-uncomment-region)
+;; ;; Line Edit
+;; (global-set-key (kbd "M-<down>") #'drag-stuff-down)
+;; (global-set-key (kbd "M-<up>") #'drag-stuff-up)
+;; (global-set-key (kbd "C-c C-d") #'crux-duplicate-current-line-or-region)
+;; (global-set-key (kbd "C-a") #'crux-move-beginning-of-line)
+
+;; Settings for exec-path-from-shell
+(use-package exec-path-from-shell
+  :defer nil
+  :if (memq window-system '(mac ns x))
+  :init (exec-path-from-shell-initialize))
+
+;; format all, formatter for almost languages
+;; great for programmers
+(use-package format-all
+  :diminish
+  :hook (prog-mode . format-all-ensure-formatter)
+  :bind ("C-c f" . #'format-all-buffer))
+
+;; hungry delete, delete many spaces as one
+(use-package hungry-delete
+  :diminish
+  :hook (after-init . global-hungry-delete-mode))
+
+;; move-text, move line or region with M-<up>/<down>
+(use-package move-text
+  :hook (after-init . move-text-default-bindings))
 
 (require 'server)
 (setq server-client-instructions nil)
 (unless (server-running-p)
   (server-start))
+
+                                        ; (setopt }
+                                        ;  display-buffer-base-action }
+                                        ;  '((display-buffer-reuse-window display-buffer-same-window }
+                                        ;                                 display-buffer-in-previous-window }
+                                        ;                                 display-buffer-use-some-window))) }
 
 ;; (setq default-frame-alist '((width . 800) (height . 55) (menu-bar-lines . 1)))
