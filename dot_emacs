@@ -41,12 +41,14 @@
       (mapc (apply-partially 'add-to-list 'load-path) local-pkgs)
     (make-directory path :parents)))
 
-;;; UI
+(when (< emacs-major-version 29)
+  (unless (package-installed-p 'use-package)
+    (unless package-archive-contents
+      (package-refresh-contents))
+    (package-install 'use-package)))
 
-;; I do not use graphical elements
-(menu-bar-mode -1) ; Clean up UI
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(package-initialize)
 
 (ido-mode)
 (ido-everywhere)
