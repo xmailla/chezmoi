@@ -242,21 +242,21 @@
 ;; prettify emacs by much
 (require 'spacious-padding)
 (setq spacious-padding-subtle-mode-line
-        '( :mode-line-active spacious-padding-subtle-mode-line-active
-           :mode-line-inactive spacious-padding-subtle-mode-line-inactive))
-(add-hook 'after-init-hook 'spacious-padding-mode)
+      '( :mode-line-active spacious-padding-subtle-mode-line-active
+         :mode-line-inactive spacious-padding-subtle-mode-line-inactive))
+;;(add-hook 'after-init-hook 'spacious-padding-mode)
 
 ;;;; theme-buffet
-(require 'theme-buffet)
+;; (require 'theme-buffet)
 ;;;; (featurep 'modus-themes)
-(setq theme-buffet-menu 'end-user)
-(setq theme-buffet-end-user
-            '( :night     (modus-vivendi modus-vivendi-tinted modus-vivendi-tritanopia modus-vivendi-deuteranopia)
-               :morning   (modus-operandi modus-operandi-tinted modus-operandi-tritanopia modus-operandi-deuteranopia)
-               :afternoon (modus-operandi modus-operandi-tinted modus-operandi-tritanopia modus-operandi-deuteranopia)
-               :evening   (modus-vivendi modus-vivendi-tinted modus-vivendi-tritanopia modus-vivendi-deuteranopia)))
+;; (setq theme-buffet-menu 'end-user)
+;; (setq theme-buffet-end-user
+;;             '( :night     (modus-vivendi modus-vivendi-tinted modus-vivendi-tritanopia modus-vivendi-deuteranopia)
+;;                :morning   (modus-operandi modus-operandi-tinted modus-operandi-tritanopia modus-operandi-deuteranopia)
+;;                :afternoon (modus-operandi modus-operandi-tinted modus-operandi-tritanopia modus-operandi-deuteranopia)
+;;                :evening   (modus-vivendi modus-vivendi-tinted modus-vivendi-tritanopia modus-vivendi-deuteranopia)))
 
-(theme-buffet-timer-hours 1)
+;; (theme-buffet-timer-hours 1)
 
 ;;;; Fontaine: https://protesilaos.com/emacs/fontaine
 (require 'fontaine)
@@ -299,14 +299,14 @@
 ;; Tricking the system
 ;; UGLY UGLY UGLY
 (setq rmail-remote-password
- (let ((auth-info (car (auth-source-search ; I DO NOT LIKE THAT (that should be simpler)
-                          :host "mail.galae.net" ; DO NOT EXPOSE THIS PLEASE
-                          :max 1))))
-   (when auth-info
-     (let ((secret (plist-get auth-info :secret)))
-       (if (functionp secret)
-           (funcall secret)
-         secret)))))
+      (let ((auth-info (car (auth-source-search ; I DO NOT LIKE THAT (that should be simpler)
+                             :host "mail.galae.net" ; DO NOT EXPOSE THIS PLEASE
+                             :max 1))))
+        (when auth-info
+          (let ((secret (plist-get auth-info :secret)))
+            (if (functionp secret)
+                (funcall secret)
+              secret)))))
 (setq rmail-displayed-headers "^\\(?:Cc\\|Date\\|From\\|Subject\\|To\\|Sender\\):")
 
 (setq mail-default-headers (format-time-string "FCC: ~/.local/share/mail/out/%Y-out.mbox")) ; outbox by year
@@ -317,9 +317,9 @@
 
 (setq rmail-automatic-folder-directives	; Quelques règles de rangement automatique pour faire du Inbox 0 artisanal
       `((,(expand-file-name "xavier.rmail" my/inmail-folder) "to" "xavier@maillard.im")
-	(,(expand-file-name "bug-gnu-emacs.rmail" my/inmail-folder) "sender" "bug-gnu-emacs-bounces")
-	(,(expand-file-name "emacs-devel.rmail" my/inmail-folder) "sender" "emacs-devel-bounces")
-	(,(expand-file-name "help-gnu-emacs.rmail" my/inmail-folder) "sender" "help-gnu-emacs-bounces")))
+	    (,(expand-file-name "bug-gnu-emacs.rmail" my/inmail-folder) "sender" "bug-gnu-emacs-bounces")
+	    (,(expand-file-name "emacs-devel.rmail" my/inmail-folder) "sender" "emacs-devel-bounces")
+	    (,(expand-file-name "help-gnu-emacs.rmail" my/inmail-folder) "sender" "help-gnu-emacs-bounces")))
 
 (setq rmail-secondary-file-directory (file-name-as-directory my/inmail-folder))
 (setq rmail-secondary-file-regexp "^.*\\.rmail$")
@@ -327,14 +327,14 @@
 (add-to-list 'auto-mode-alist '("\\.rmail$" . rmail-mode))
 
 (global-set-key (kbd "C-c r") '(lambda ()
-				 (interactive)
-				 (let ((current-prefix-arg '(4)))
-				   (call-interactively #'rmail))))
+				                 (interactive)
+				                 (let ((current-prefix-arg '(4)))
+				                   (call-interactively #'rmail))))
 (global-set-key (kbd "C-c R") 'rmail)
 
 ;; TODO: mairix ?
 
-; Simple et basique: msmtp fait le boulot. FIN
+                                        ; Simple et basique: msmtp fait le boulot. FIN
 (setq send-mail-function 'sendmail-send-it)
 (setq sendmail-program (executable-find "msmtp")) ;
 
@@ -361,25 +361,25 @@
 ;; counsel-rg for howm
 (defun howm-list--counsel-rg (match)
   (if (string= match "")
-  (howm-list-all)
-(if (or (null ivy--old-cands)
-	(equal ivy--old-cands '("No matches found")))
+      (howm-list-all)
+    (if (or (null ivy--old-cands)
+	        (equal ivy--old-cands '("No matches found")))
         (message "No match")
-  (let ((howm-view-use-grep
-	 #'(lambda (str file-list &optional fixed-p force-case-fold)
+      (let ((howm-view-use-grep
+	         #'(lambda (str file-list &optional fixed-p force-case-fold)
                  (mapcar
                   (lambda (cand)
-		(if (string-match "\\`\\(.*\\):\\([0-9]+\\):\\(.*\\)\\'" cand)
+		            (if (string-match "\\`\\(.*\\):\\([0-9]+\\):\\(.*\\)\\'" cand)
                         (let ((file (match-string-no-properties 1 cand))
-			  (line (match-string-no-properties 2 cand))
-			  (match-line (match-string-no-properties 3 cand)))
+			                  (line (match-string-no-properties 2 cand))
+			                  (match-line (match-string-no-properties 3 cand)))
                           (list (expand-file-name file howm-directory)
                                 (string-to-number line)
                                 match-line))))
                   ivy--old-cands))))
         (howm-search ivy--old-re t)
         (riffle-set-place
-     (1+ (cl-position match ivy--old-cands :test 'string=)))))))
+         (1+ (cl-position match ivy--old-cands :test 'string=)))))))
 
 (defun howm-counsel-rg ()
   "Interactively grep for a string in your howm notes using rg."
@@ -388,12 +388,12 @@
         (counsel-ag-base-command counsel-rg-base-command)
         (counsel-ag-command (counsel--format-ag-command "--glob=!*~" "%s")))
     (ivy-read "Search all (rg): "
-	      #'counsel-ag-function
-	      :dynamic-collection t
-	      :keymap counsel-ag-map
-	      :action #'howm-list--counsel-rg
-	      :require-match t
-	      :caller 'counsel-rg)))
+	          #'counsel-ag-function
+	          :dynamic-collection t
+	          :keymap counsel-ag-map
+	          :action #'howm-list--counsel-rg
+	          :require-match t
+	          :caller 'counsel-rg)))
 
 (define-key global-map (concat howm-prefix "r") 'howm-counsel-rg)
 (define-key howm-menu-mode-map "\C-h" nil)
@@ -444,7 +444,7 @@
 
 (setq calendar-date-style 'iso)
 (setq calendar-date-display-form calendar-iso-date-display-form)
-(setq calendar-time-zone-style 'numeric) 
+(setq calendar-time-zone-style 'numeric)
 (setq calendar-week-start-day 1  	; lundi
       calendar-day-name-array ["Dimanche" "Lundi" "Mardi" "Mercredi"
                                "Jeudi" "Vendredi" "Samedi"]
@@ -506,7 +506,7 @@
 
 ;; HOOKS
 
-; Clean trailing whitespace before saving:
+                                        ; Clean trailing whitespace before saving:
 ;; (add-to-list 'write-file-functions 'delete-trailing-whitespace)
 
 (add-hook 'emacs-lisp-mode-hook (lambda () (setq mode-name "E")))
