@@ -50,12 +50,84 @@
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
 
-(ido-mode)
-(ido-everywhere)
+;; Il est temps de se moderniser un tout petit peu :/
+(use-package emacs
+  :ensure t
+  :demand t
+  :custom
+  (user-full-name "Xavier Maillard")
+  (user-mail-address "x@maillard.im")
+  (default-directory "~/" "On utilise $HOME pour tout")
+  (create-lockfiles nil)
 
-(column-number-mode)
-(show-paren-mode)
-(global-hl-line-mode t)
+  ;; au démarrage, au plus court
+  (inhibit-startup-screen t)
+  (inhibit-startup-message t "I know I am ready")
+  (inhibit-startup-echo-area-message t "Yep, still know it")
+  (initial-scratch-message nil "I know it is the scratch buffer where I can write anything!")
+
+  (eshell-banner-message "")
+  (ido-auto-merge-work-directories-length -1) ; disable auto directory switching in IDO
+  (bookmark-save-flag 1) ; save bookmarks after every change/new bookmark
+  (ido-use-filename-at-point 'guess)  ; Use find-file-at-point whenever theres a file at point
+  (inhibit-eol-conversion nil)
+  (dired-dwim-target t)  ; make dired target default to the next dired window (eg to copy files between windows)
+  (dired-isearch-filenames t)  ; make isearch only search filenames in dired buffers
+  (dired-listing-switches "-al --group-directories-first")
+  (shr-discard-aria-hidden t)  ; don't render "hidden" tags on webpages
+
+  ;; Sauvegardes & co
+  (backup-by-copying t)      ; don't clobber symlinks
+  (backup-directory-alist '(("." . "~/.local/share/emacs/backup")))    ; don't litter my fs tree
+  (delete-old-versions t)
+  (kept-new-versions 6)
+  (kept-old-versions 2)
+  (version-control t)       ; use versioned backups
+  (auto-save-file-name-transforms '((".*" "~/.local/share/emacs/backup/" t)))
+
+  ;; desktop save path
+  (desktop-path '("~/.local/cache/emacs/"))
+
+  ;; spécificités use-package (si + à jour sur ELPA, go for it)
+  (package-install-upgrade-built-in t)
+  (use-package-always-ensure t)
+
+  ;; tabs
+  (tab-width 4 "Always tab 4 spaces.")
+  (indent-tabs-mode t "Défaut mais pour rappel.")
+
+
+  :init
+  ;; Je n'utilise pas les éléments graphiques
+  (menu-bar-mode -1) ; ni barre de menu
+  (tool-bar-mode -1) ; ni la barre d'outils
+  (scroll-bar-mode -1) ; ni la barre de défilement
+  ;; mais
+  (column-number-mode) ; j'aime bien avoir le numéro de la colonne
+  (show-paren-mode)    ; ... avoir les parenthèses correspondantes
+  (global-hl-line-mode t)               ; surligner la ligne en cours
+  (global-display-line-numbers-mode 1)  ; afficher le numéro de la ligne
+  (size-indication-mode t)              ; donner une indication de la taille du buffer
+  (blink-cursor-mode -1)                ; inutile de clignoter
+
+  (electric-pair-mode)                  ; créer des pairs de (), {}, etc.
+
+  (ido-mode)
+  (ido-everywhere)
+
+  (fset 'yes-or-no-p 'y-or-n-p)         ; y/n est ok
+
+  (abbrev-mode t)
+  (global-auto-revert-mode t)           ; basculer à la demande sur des versions éditées ailleurs que dans emacs si le cas se présente
+  (savehist-mode)                       ; sauvegarde de l'historique du minibuffer
+
+  ;; (set-frame-font "Iosevka Semibold 12" nil t) ;; font of the century
+
+  (desktop-save-mode)
+  (desktop-read)
+
+  )
+
 
 ;;; Prot is in Da Place (thank you Prot!!)
 (setq custom-safe-themes t)
