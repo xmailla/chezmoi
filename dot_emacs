@@ -147,6 +147,8 @@
   (desktop-save-mode)
   (desktop-read)
 
+  (icomplete-vertical-mode t)
+
   (fido-mode t)
 
   :bind (
@@ -180,27 +182,38 @@
          ("C-h V" . apropos-variable) ; lower case is `describe-variable'
          ("C-h L" . apropos-library) ; lower case is `view-lossage'
          ("C-h c" . describe-char) ; overrides `describe-key-briefly'
+
+         ("C-x k" . kill-current-buffer)
+         ;; ("C-x C-c" . nano-kill)        ;
+         ("C-x C-r" #'recentf-open)
+         ;; ("C-g" . nano-quit)
+         ("M-n" . make-frame)
+         ("C-z" . nil) ;; No suspend frame
+         ("C-<wheel-up>" . nil) ;; No text resize via mouse scroll
+         ("C-<wheel-down>" . nil) ;
          )
   )
 
 
 ;;; Prot is in Da Place (thank you Prot!!)
 (setq custom-safe-themes t)
-(load-theme 'modus-operandi-tinted)
+;; (load-theme 'modus-operandi-tinted)
 
-;; pulsar: https://protesilaos.com/emacs/pulsar
-(require 'pulsar)
-(setopt pulsar-pulse t
-          pulsar-delay 0.055
-          pulsar-iterations 10
-          pulsar-face 'pulsar-green
-          pulsar-highlight-face 'pulsar-magenta)
 
-(pulsar-global-mode 1)
-(add-hook 'next-error-hook '(pulsar-pulse-line-red pulsar-recenter-top pulsar-reveal-entry))
-(add-hook 'minibuffer-setup-hook 'pulsar-pulse-line-red)
-(global-set-key (kbd "C-x l") 'pulsar-pulse-line)
-(global-set-key (kbd "C-x L") 'pulsar-highlight-dwim)
+(defun pulse-save-buffers (&rest args)
+  (save-some-buffers t)
+  (pulse-momentary-highlight-one-line (point)))
+
+;; auto save when frame lose focus, Alt-Tab
+(add-function :after after-focus-change-function #'pulse-save-buffers)
+;; auto save when buffer changed
+(dolist (command '(other-window
+                   switch-to-buffer
+                   next-buffer
+                   previous-buffer))
+  (advice-add command :after #'pulse-save-buffers))
+
+
 
 ;; lin: https://protesilaos.com/emacs/lin
 (require 'lin)
