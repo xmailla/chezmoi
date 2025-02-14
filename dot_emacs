@@ -308,8 +308,9 @@
 (setq rmail-automatic-folder-directives	; Quelques règles de rangement automatique pour faire du Inbox 0 artisanal
       `((,(expand-file-name "xavier.rmail" my/inmail-folder) "to" "xavier@maillard.im")
 	    (,(expand-file-name "bug-gnu-emacs.rmail" my/inmail-folder) "sender" "bug-gnu-emacs-bounces")
-	    (,(expand-file-name "emacs-devel.rmail" my/inmail-folder) "sender" "emacs-devel-bounces")
-	    (,(expand-file-name "help-gnu-emacs.rmail" my/inmail-folder) "sender" "help-gnu-emacs-bounces")))
+	    (,(expand-file-name "devel-gnu-emacs.rmail" my/inmail-folder) "sender" "emacs-devel-bounces")
+	    (,(expand-file-name "help-gnu-emacs.rmail" my/inmail-folder) "sender" "help-gnu-emacs-bounces")
+        (,(expand-file-name "users-gnu-hyperbole.rmail" my/inmail-folder) "sender" "hyperbole-users-bounces")))
 
 (setq rmail-secondary-file-directory (file-name-as-directory my/inmail-folder))
 (setq rmail-secondary-file-regexp "^.*\\.rmail$")
