@@ -24,7 +24,9 @@
 ;;
 ;; Exceptions:
 ;;   - Howm mode for life and not taking (Am I say how much I dislike Org ?)
-;;   - Various modules by Prot
+;;   - GNU Hyperbole
+;;   - records-mode (j'en suis le mainteneur)
+;;   - Various modules by Prot (but less and less)
 
 ;;; Code:
 
@@ -396,6 +398,14 @@
 ;; Rename buffers to their title
 (add-hook 'howm-mode-hook 'howm-mode-set-buffer-name)
 (add-hook 'after-save-hook 'howm-mode-set-buffer-name)
+
+;; GNU hyperbole
+
+(use-package hyperbole
+  :init
+  (hyperbole-mode 1)
+  )
+
 
 ;; MODES
 ;; Life
