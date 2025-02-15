@@ -664,6 +664,12 @@
 (use-package move-text
   :hook (after-init . move-text-default-bindings))
 
+;; Utilitaires
+;; midnight
+;; auto-destruction des vieux buffers
+(use-package midnight
+  :hook (after-init . midnight-mode))
+
 (require 'server)
 (setq server-client-instructions nil)
 (unless (server-running-p)
