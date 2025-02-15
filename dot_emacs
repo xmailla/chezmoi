@@ -35,6 +35,72 @@
 (require 'package)
 (require 'vc)
 
+(defgroup my nil
+  "Ma configuration personnalisée."
+  :group 'local)
+
+(defcustom my/local-directory
+  (expand-file-name "~/.local")
+  "Répertoire de base pour de nombreux fichiers locaux (cache, états, mail, etc.)."
+  :type 'directory
+  :group 'my)
+
+(defcustom my/emacs-directory
+  (expand-file-name "emacs" my/local-directory)
+  "Répertoire de base pour les fichiers emacs (hors configuration)."
+  :type 'directory
+  :group 'my)
+
+(defcustom my/cache-directory
+  (expand-file-name "cache" my/emacs-directory)
+  "Répertoire utilisé par plusieurs paquets pour persister de la donnée."
+  :type 'directory
+  :group 'my)
+
+(defcustom my/backup-directory
+  (expand-file-name "backup" my/emacs-directory)
+  "Répertoire utilisé par plusieurs paquets pour des sauvegardes."
+  :type 'directory
+  :group 'my)
+
+(defcustom my/state-directory
+  (expand-file-name "state" my/emacs-directory)
+  "Répertoire utilisé par plusieurs paquets pour garder des fichiers d'états."
+  :type 'directory
+  :group 'my)
+
+(defcustom my/mail-directory
+  (expand-file-name "mail" "~/.local")
+  "Répertoire utilisé pour le stockage des mails reçus/envoyés et tout ce qui touche aux mails de manière générale."
+  :type 'directory
+  :group 'my)
+
+(defcustom my/inmail-directory
+  (expand-file-name "in" my/mail-directory)
+  "Répertoire utilisé pour le stockage des mails reçus."
+  :type 'directory
+  :group 'my)
+
+(defcustom my/outmail-directory
+  (expand-file-name "out" my/mail-directory)
+  "Répertoire utilisé pour le stockage des mails envoyés."
+  :type 'directory
+  :group 'my)
+
+(defcustom my/notes-directory
+  (expand-file-name "notes" "~/Documents")
+  "Répertoire utilisé pour le stockage des notes (howm, org, records, etc.)."
+  :type 'directory
+  :group 'my)
+
+(defcustom my/chezmoi-directory
+  (expand-file-name "chezmoi" "~/.local/share")
+  "Répertoire utilisé pour la gestion de mes fichiers de configuration."
+  :type 'directory
+  :group 'my)
+
+
+
 ;; BASICS
 ;;; Load recurisvely all directories containing .el files under `user-emacs-directory'/elisp
 (let* ((path (expand-file-name "elisp" user-emacs-directory))
@@ -80,15 +146,15 @@
 
   ;; Sauvegardes & co
   (backup-by-copying t)      ; don't clobber symlinks
-  (backup-directory-alist '(("." . "~/.local/share/emacs/backup")))    ; don't litter my fs tree
+  (backup-directory-alist '(("." . my/backup-directory)))    ; don't litter my fs tree
   (delete-old-versions t)
   (kept-new-versions 6)
   (kept-old-versions 2)
   (version-control t)       ; use versioned backups
-  (auto-save-file-name-transforms '((".*" "~/.local/share/emacs/backup/" t)))
+  (auto-save-file-name-transforms '((".*" my/backup-directory t)))
 
   ;; desktop save path
-  (desktop-path '("~/.local/cache/emacs/"))
+  (desktop-path '(my/cache-directory))
 
   ;; spécificités use-package (si + à jour sur ELPA, go for it)
   (package-install-upgrade-built-in t)
@@ -228,7 +294,7 @@
 ;; Check the `cursory-presets' for how to set your own preset styles.
 
 (setq cursory-latest-state-file
-      (expand-file-name "~/.local/state/emacs/cursory-latest.state"))
+      (expand-file-name "cursory-latest" my/state-directory))
 
 ;; Set last preset or fall back to desired style from `cursory-presets'.
 (cursory-set-preset (or (cursory-restore-latest-preset) 'bar))
@@ -251,7 +317,7 @@
 ;;;; Fontaine: https://protesilaos.com/emacs/fontaine
 (require 'fontaine)
 (setq fontaine-latest-state-file
-      (expand-file-name "~/.local/state/fontaine-latest.state"))
+      (expand-file-name "fontaine-latest" my/state-directory))
 (fontaine-set-preset (or (fontaine-restore-latest-preset) 'regular))
 (define-key global-map (kbd "C-c f") #'fontaine-set-preset)
 (fontaine-mode 1)
@@ -284,7 +350,7 @@
 (setq rmail-preserve-inbox nil)
 
 (setq rmail-remote-password-required t)
-(setq rmail-file-name (expand-file-name "inbox.rmail" my/inmail-folder))
+(setq rmail-file-name (expand-file-name "inbox.rmail" my/inmail-directory))
 
 ;; Tricking the system
 ;; UGLY UGLY UGLY
@@ -298,21 +364,20 @@
                 (funcall secret)
               secret)))))
 (setq rmail-displayed-headers "^\\(?:Cc\\|Date\\|From\\|Subject\\|To\\|Sender\\):")
-
-(setq mail-default-headers (format-time-string "FCC: ~/.local/share/mail/out/%Y-out.mbox")) ; outbox by year
+(setq mail-default-headers (format-time-string (concat "FCC: " (expand-file-name "%Y-out.rmail" my/outmail-directory))))
 
 ;; (setq rmail-primary-inbox-list '("maildir://~/.local/share/mail/galae/INBOX"))
 
-(setq rmail-mime-attachment-dirs-alist `((".*" ,my/dl-folder)))
+(setq rmail-mime-attachment-dirs-alist `((".*" ,my/cache-directory)))
 
 (setq rmail-automatic-folder-directives	; Quelques règles de rangement automatique pour faire du Inbox 0 artisanal
-      `((,(expand-file-name "xavier.rmail" my/inmail-folder) "to" "xavier@maillard.im")
-	    (,(expand-file-name "bug-gnu-emacs.rmail" my/inmail-folder) "sender" "bug-gnu-emacs-bounces")
-	    (,(expand-file-name "devel-gnu-emacs.rmail" my/inmail-folder) "sender" "emacs-devel-bounces")
-	    (,(expand-file-name "help-gnu-emacs.rmail" my/inmail-folder) "sender" "help-gnu-emacs-bounces")
-        (,(expand-file-name "users-gnu-hyperbole.rmail" my/inmail-folder) "sender" "hyperbole-users-bounces")))
+      `((,(expand-file-name "xavier.rmail" my/inmail-directory) "to" "xavier@maillard.im")
+	    (,(expand-file-name "bug-gnu-emacs.rmail" my/inmail-directory) "sender" "bug-gnu-emacs-bounces")
+	    (,(expand-file-name "devel-gnu-emacs.rmail" my/inmail-directory) "sender" "emacs-devel-bounces")
+	    (,(expand-file-name "help-gnu-emacs.rmail" my/inmail-directory) "sender" "help-gnu-emacs-bounces")
+        (,(expand-file-name "users-gnu-hyperbole.rmail" my/inmail-directory) "sender" "hyperbole-users-bounces")))
 
-(setq rmail-secondary-file-directory (file-name-as-directory my/inmail-folder))
+(setq rmail-secondary-file-directory (file-name-as-directory my/inmail-directory))
 (setq rmail-secondary-file-regexp "^.*\\.rmail$")
 
 (add-to-list 'auto-mode-alist '("\\.rmail$" . rmail-mode))
@@ -417,7 +482,7 @@
 (require 'appt)
 (require 'prot-diary)
 
-(setq diary-file (format-time-string "~/.local/share/emacs/life/diary-%Y"))
+(setq diary-file (format-time-string (expand-file-name "diary-%Y" my/cache-directory)))
 (setq diary-display-function #'diary-fancy-display)
 (setq diary-date-forms diary-iso-date-forms)
 (setq diary-comment-start ";;")
@@ -676,6 +741,7 @@
   :ensure nil                           ;builtin}
   :config
   (setq newsticker-frontend 'newsticker-plainview)
+  (setq newsticker-dir my/cache-directory)
   )
 
 (require 'server)
