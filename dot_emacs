@@ -146,15 +146,15 @@
 
   ;; Sauvegardes & co
   (backup-by-copying t)      ; don't clobber symlinks
-  (backup-directory-alist '(("." . my/backup-directory)))    ; don't litter my fs tree
+  (backup-directory-alist '(("." . 'my/backup-directory)))    ; don't litter my fs tree
   (delete-old-versions t)
   (kept-new-versions 6)
   (kept-old-versions 2)
   (version-control t)       ; use versioned backups
-  (auto-save-file-name-transforms '((".*" my/backup-directory t)))
+  ;; (auto-save-file-name-transforms '((".*" my/backup-directory t)))
 
   ;; desktop save path
-  (desktop-path '(my/cache-directory))
+  (desktop-path (list my/cache-directory))
 
   ;; spécificités use-package (si + à jour sur ELPA, go for it)
   (package-install-upgrade-built-in t)
@@ -253,7 +253,7 @@
 
          ("C-x k" . kill-current-buffer)
          ;; ("C-x C-c" . nano-kill)        ;
-         ("C-x C-r" #'recentf-open)
+         ("C-x C-r" . recentf-open)
          ;; ("C-g" . nano-quit)
          ("M-n" . make-frame)
          ("C-z" . nil) ;; No suspend frame
@@ -718,7 +718,7 @@
 (use-package format-all
   :diminish
   :hook (prog-mode . format-all-ensure-formatter)
-  :bind ("C-c f" . #'format-all-buffer))
+  :bind (("C-c f" . #'format-all-buffer)))
 
 ;; hungry delete, delete many spaces as one
 (use-package hungry-delete
