@@ -668,7 +668,15 @@
 ;; midnight
 ;; auto-destruction des vieux buffers
 (use-package midnight
+  :ensure nil                           ;builtin}
   :hook (after-init . midnight-mode))
+
+;; lecture RSS
+(use-package newsticker
+  :ensure nil                           ;builtin}
+  :config
+  (setq newsticker-frontend 'newsticker-plainview)
+  )
 
 (require 'server)
 (setq server-client-instructions nil)
