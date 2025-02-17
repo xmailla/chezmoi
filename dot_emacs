@@ -739,10 +739,87 @@
 ;; lecture RSS
 (use-package newsticker
   :ensure nil                           ;builtin}
+  :bind ("C-c w n" . fg-feeds)
+  :init
+  (let ((file (expand-file-name "feeds.el" my/cache-directory)))
+	(when (file-exists-p file)
+	  (load file)))
+
   :config
-  (setq newsticker-frontend 'newsticker-plainview)
-  (setq newsticker-dir my/cache-directory)
-  )
+  (defun fg-feeds ()
+	"Start newsticker feed fetching and ticker or
+activate newsticker layout (and reset ticker) if it's already started."
+	(interactive)
+	(if (newsticker-running-p)
+		(let ((win (newsticker--treeview-list-window))) ; return current window if there's none
+		  (if
+			  (and (window-live-p win)
+				   (string-match "Newsticker" (buffer-name (window-buffer win))))
+			  (progn
+				(newsticker-treeview-quit)
+				(newsticker--ticker-text-setup)) ; reset ticker, since news are displayed already
+			(newsticker-show-news)))
+	  (newsticker-start)
+	  (newsticker-start-ticker)))
+  
+  ;; No idea why, but it looks like newsticker--treeview-windows contains
+  ;;  some dead window in place of proper treeview-list, temporary workaround
+  (defadvice newsticker--treeview-list-window
+	  (around fg-newsticker--treeview-list-window activate)
+	ad-do-it
+	(unless (window-live-p ad-return-value)
+	  (dolist (win (get-buffer-window-list (newsticker--treeview-list-buffer)))
+		(when (window-live-p win) (setq ad-return-value win)))))
+  ;; newsticker--selection-overlay is also "in no buffer"-broken because of that,
+  ;;  so selection position is always unset in treeview-list, and set-window-point is never called
+  ;; This hack just always sets it to the beginning of the buffer
+  (defadvice newsticker--treeview-list-feed-items
+	  (after fg-newsticker--treeview-list-feed-items activate)
+	(set-window-point (newsticker--treeview-list-window) 0))
+  
+  
+  ;; Advice replaces frame-width function, just for newsticker--display-scroll
+  ;;  invocation with a custom one - frame-width-static, leaving the old def backed-up
+  ;; Intended usage is frame with variable-pitch font, where width can't be set reliably
+  (defun frame-width-custom (&optional frame) (round (frame-width-real) 1.2))
+  (fset 'frame-width-real (symbol-function 'frame-width))
+  (defadvice newsticker--display-scroll
+	  (around fg-newsticker--display-scroll activate)
+	(fset 'frame-width (symbol-function 'frame-width-custom))
+	ad-do-it
+	(fset 'frame-width (symbol-function 'frame-width-real)))
+  
+  :custom
+  (newsticker-frontend 'newsticker-treeview)
+  (newsticker-dir my/cache-directory)
+  (newsticker-treeview-treeview-window 45)
+  (newsticker-treeview-listwindow-height 30)
+  (newsticker-url-list-defaults nil)
+  (newsticker-retrieval-interval (* 4 3600))
+  
+  (newsticker-automatically-mark-items-as-old nil)
+  (newsticker-automatically-mark-visited-items-as-old t)
+  (newsticker-obsolete-item-max-age (* 30 24 3600))
+  
+  (newsticker-ticker-interval 0.3)
+  (newsticker-scroll-smoothly t)
+  (newsticker-hide-immortal-items-in-echo-area t)
+  (newsticker-hide-obsolete-items-in-echo-area t)
+  
+  (newsticker-html-renderer 'shr)
+  (newsticker-date-format "(%H:%M, %A %d.%m)")
+  
+  (newsticker-treeview-own-frame nil))
+
+
+
+;; (use-package cus-edit
+;;   :demand t
+;;   :custom
+;;   (custom-file (expand-file-name "custom.el" user-emacs-directory))
+;;   :init
+;;   (when (file-exists-p custom-file)
+;;     (load custom-file)))
 
 (require 'server)
 (setq server-client-instructions nil)
