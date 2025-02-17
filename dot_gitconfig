@@ -1,6 +1,7 @@
 [user]
 	name = xmailla
 	email = x@maillard.im
+	signingkey = 89F83A5CAF561F75!
 
 [filter "lfs"]
 	clean = git-lfs clean -- %f
@@ -97,3 +98,7 @@
 	rdone = "!f() { git add . --all && git status -sb && echo "$@" | git commit -F - && git push; }; f"
 	update = !git pull && git submodule update --init --recursive
 
+[commit]
+	gpgSign = true
+[tag]
+	gpgSign = true
