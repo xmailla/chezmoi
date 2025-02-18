@@ -811,7 +811,57 @@ activate newsticker layout (and reset ticker) if it's already started."
   
   (newsticker-treeview-own-frame nil))
 
+(use-package elfeed
 
+  :bind ("C-c w e" . elfeed)
+  :custom
+  (elfeed-use-curl nil)
+  (elfeed-curl-max-connections 10)
+  (elfeed-db-directory (expand-file-name "rss" my/cache-directory))
+  (elfeed-enclosure-default-dir "~/Downloads/")
+  (elfeed-search-filter "@2-weeks-ago +unread")
+  (elfeed-sort-order 'descending)
+  (elfeed-search-clipboard-type 'CLIPBOARD)
+  (elfeed-search-title-max-width 100)
+  (elfeed-search-title-min-width 30)
+  (elfeed-search-trailing-width 25)
+  (elfeed-show-truncate-long-urls t)
+  (elfeed-show-unique-buffers t)
+  (elfeed-search-date-format '("%F %R" 16 :left))
+  :hook
+  (elfeed-show-mode . visual-line-mode)
+
+  :bind
+  (
+   :map elfeed-search-mode-map
+		("w" . elfeed-search-yank)
+		("g" . elfeed-update)
+		("G" . elfeed-search-update--force)
+		:map elfeed-show-mode-map
+		("w" . elfeed-show-yank)
+		)
+  )
+
+(use-package elfeed-org
+  :custom
+  (rmh-elfeed-org-files (list "~/Documents/feeds.org"))
+  :config
+  (elfeed-org)
+
+)
+
+(use-package elfeed-score
+  :after elfeed
+  :custom
+  (elfeed-score-serde-score-file (expand-file-name "elfeed.score" my/cache-directory))
+  (elfeed-score-rule-stats-file (expand-file-name "elfeed.stats" my/cache-directory))
+  :config
+  (setq elfeed-search-print-entry-function #'elfeed-score-print-entry)
+  (elfeed-score-enable)
+  
+  :bind (:map elfeed-search-mode-map
+			  ("=" . elfeed-score-map))
+  )
 
 ;; (use-package cus-edit
 ;;   :demand t
@@ -833,3 +883,27 @@ activate newsticker layout (and reset ticker) if it's already started."
                                         ;                                 display-buffer-use-some-window))) }
 
 ;; (setq default-frame-alist '((width . 800) (height . 55) (menu-bar-lines . 1)))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+
+ '(org-fold-core-style 'overlays)
+ '(package-selected-packages
+   '(agitate altcaps beframe breadcrumb consult-denote corfu crux
+			 csv-mode cursory diminish dired-preview dired-subtree
+			 elfeed elfeed-org elfeed-score embark-consult
+			 exec-path-from-shell expreg fontaine format-all goto-chg
+			 howm hungry-delete hyperbole keycast lin logos marginalia
+			 markdown-mode modus-themes move-text notmuch-indicator
+			 ol-notmuch olivetti orderless package-lint-flymake pass
+			 pulsar rainbow-mode ready-player show-font
+			 spacious-padding substitute sxhkdrc-mode theme-buffet tmr
+			 trashed vertico)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
