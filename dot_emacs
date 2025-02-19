@@ -364,7 +364,7 @@
                 (funcall secret)
               secret)))))
 (setq rmail-displayed-headers "^\\(?:Cc\\|Date\\|From\\|Subject\\|To\\|Sender\\):")
-(setq mail-default-headers (format-time-string (concat "FCC: " (expand-file-name "%Y-out.rmail" my/outmail-directory))))
+(setq mail-default-headers (format-time-string (concat "FCC: " (expand-file-name "%Y-out.rmail\n" my/outmail-directory))))
 
 ;; (setq rmail-primary-inbox-list '("maildir://~/.local/share/mail/galae/INBOX"))
 
