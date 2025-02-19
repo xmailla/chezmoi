@@ -470,6 +470,8 @@
 (use-package hyperbole
   :init
   (hyperbole-mode 1)
+  :custom
+  (hyrolo-file-list (list "~/Documents/rolo.otl"))
   )
 
 
