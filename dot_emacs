@@ -836,12 +836,12 @@ activate newsticker layout (and reset ticker) if it's already started."
   :bind
   (
    :map elfeed-search-mode-map
-		("w" . elfeed-search-yank)
-		("g" . elfeed-update)
-		("G" . elfeed-search-update--force)
-		:map elfeed-show-mode-map
-		("w" . elfeed-show-yank)
-		)
+   ("w" . elfeed-search-yank)
+   ("g" . elfeed-update)
+   ("G" . elfeed-search-update--force)
+   :map elfeed-show-mode-map
+   ("w" . elfeed-show-yank)
+   )
   )
 
 (use-package elfeed-org
@@ -850,7 +850,7 @@ activate newsticker layout (and reset ticker) if it's already started."
   :config
   (elfeed-org)
 
-)
+  )
 
 (use-package elfeed-score
   :after elfeed
@@ -860,7 +860,7 @@ activate newsticker layout (and reset ticker) if it's already started."
   :config
   (setq elfeed-search-print-entry-function #'elfeed-score-print-entry)
   (elfeed-score-enable)
-  
+
   :bind (:map elfeed-search-mode-map
 			  ("=" . elfeed-score-map))
   )
