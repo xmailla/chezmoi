@@ -1,0 +1,102 @@
+  #+title: Ma liste de flux pour M-x elfeed
+
+* Blogs                                                              :elfeed:
+** entry-title: \(youtube\|video\)                                    :video:
+** entry-title: \(linux\|linus\|ubuntu\|kde\|gnome\)                  :linux:
+** http://git-annex.branchable.com/design/assistant/blog/index.rss :mustread:
+** http://feeds.feedburner.com/InformationIsBeautiful
+** [[http://orgmode.org][Org Mode Links supported as well]]
+** Software Development                                                 :dev:
+*** Emacs                                                    :emacs:mustread:
+**** http://www.terminally-incoherent.com/blog/feed
+**** http://nullprogram.com/feed
+**** https://lucidmanager.org/tags/emacs/index.xml
+**** http://www.reddit.com/r/emacs/.rss
+**** https://www.youtube.com/feeds/videos.xml?channel_id=UCEqYjPJdmEcUVfHmQwJVM9A
+**** entry-title: \(emacs\|org-mode\)
+**** http://planet.emacsen.org/atom.xml
+**** [[toobnix:154][EmacsConf]]
+*** Web Development                                                     :web:
+**** http://planet.phpunit.de/atom.xml
+**** http://feeds.feedburner.com/symfony/blog
+**** http://feeds.feedburner.com/qooxdoo/blog/content
+*** Eclipse                                                         :eclipse:
+**** http://blog.eclipse-tips.com/feeds/posts/default?alt=rss
+**** http://ed-merks.blogspot.com/feeds/posts/default
+     A description of a feed can be written under any headline.
+     The text will be ignored by elfeed.
+**** http://feeds.feedburner.com/eclipselive                         :ignore:
+**** http://www.fosslc.org/drupal/rss.xml                             :video:
+**** https://www.youtube.com/feeds/videos.xml?channel_id=UCNRwswKKpjOlOVfFTS73P9A :hyperbole:
+#+link: toobnix https://toobnix.org/feeds/videos.xml?videoChannelId=
+* Imported Feeds            :elfeed:
+** [[https://blog.desgrange.net/index.xml][desgrange.net]]
+** [[https://emacsconf.org/index.rss][EmacsConf]]
+** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCqktZR8MrXAK6YOjJtdPTnw][Courts Toujours]]
+** [[https://www.youtube.com/feeds/videos.xml?channel_id=UC_HB-MuHaAcWZ2DvG8U3Qag][Charles & Ava]]
+** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCqA8H22FwgBVcF3GJpp0MQw][Monsieur Phi]]
+** [[https://www.youtube.com/feeds/videos.xml?channel_id=UClUH6rV48B4AVpM2xrn8niw][Chipsou]]
+** [[https://www.youtube.com/feeds/videos.xml?channel_id=UC0uTPqBCFIpZxlz_Lv1tk_g][Protesilaos Stavrou]]
+** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCtBzfGaJzGGNJVOVM0mK4uQ][JustInCooking]]
+** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCgJE34EpNI4fhGA2j_WSHGg][Apprendre Les Echecs]]
+** [[https://emacs.tv/videos.rss][Emacs TV]]
+** [[https://sachachua.com/blog/feed][Sacha Chua]]
+** [[https://feeds.audiomeans.fr/feed/f16e2818-c652-4fa2-ab65-2f81cf8331bc.xml][Dans la Tête d'un Coureur]]
+** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCoxH1l3e4kKX3-aY6DHAgaQ][]]
+** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCMzECvsMIHcSjomZYRpJgtw][Meilleur du Chef]]
+** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCUP5EGxbtsKwxy93CS_9iLg][Joachim Mouhamad]]
+** [[https://notrelated.xyz/rss][Not Related! A Big-Braned Podcast]]
+** [[https://lichess.org/blog/community.atom][Lichess community blogs]]
+** [[https://lichess.org/blog.atom][]]
+** [[https://ploum.net/atom.xml][Ploum.net]]
+** [[https://codemadness.org/rss_content.xml][Codemadness]]
+** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCpon_anEIMQ-pPLDskYsSvQ][8Blit - ATARI 2600 Game Programming]]
+** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCn6wdVs-gSmZBJXSAWPzf7Q][Fédération Française des Echecs]]
+** [[https://github.com/protesilaos/mct/commits.atom][]]
+** [[https://github.com/protesilaos/tmr/commits.atom][Recent Commits to tmr:main]]
+** [[https://github.com/protesilaos/mandoura/commits.atom][Recent Commits to mandoura:main]]
+** [[https://github.com/protesilaos/spacious-padding/commits.atom][Recent Commits to spacious-padding:main]]
+** [[https://github.com/protesilaos/pulsar/commits.atom][Recent Commits to pulsar:main]]
+** [[https://github.com/protesilaos/dired-preview/commits.atom][Recent Commits to dired-preview:main]]
+** [[https://github.com/protesilaos/beframe/commits.atom][Recent Commits to beframe:main]]
+** [[https://github.com/protesilaos/modus-themes/commits.atom][Recent Commits to modus-themes:main]]
+** [[https://github.com/protesilaos/denote/commits.atom][Recent Commits to denote:main]]
+** [[https://github.com/protesilaos/dotfiles/commits.atom][Recent Commits to dotfiles:master]]
+** [[http://planet.april.org/rss20.xml][Planète April]]
+** [[https://www.laquadrature.net/feed/][La Quadrature du Net]]
+** [[https://linuxfr.org/journaux.atom][LinuxFr.org : les journaux]]
+** [[https://linuxfr.org/news.atom][LinuxFr.org : les dépêches]]
+** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCt3B6rUXb__X2eMyY7jzgIg][]]
+** [[https://www.youtube.com/playlist?list=PL98VsD-AiptchB1QvonVuMopKLisGFNEs][]]
+** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCnvMBVMXMPKA4Lmy5Ihd-FQ][Scott P. Scheper]]
+** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCe5wY6AyIMPiGImd9ef0VSg][Les secrets de Muriel]]
+** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCyeoIdJHgQhOrct9mVJ2fTQ][Le Petit Astronome]]
+** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCq-8pBMM3I40QlrhM9ExXJQ][]]
+** [[https://www.youtube.com/feeds/videos.xml?channel_id=UC0muqv2rF6gR2blajBGvQmA][La stratégie aux échecs]]
+** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCLXDNUOO3EQ80VmD9nQBHPg][Fouloscopie]]
+** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCNH5q45xLYx_spiIHlkoyGQ][Everbook]]
+** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCLgx_5JMVp50yP_3K4CSR2g][Échecs - Sylvain Ravot]]
+** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCwBtfnsZ-z5d0kCY1_szv-Q][Progresser aux échecs avec Marc Quenehen]]
+** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCcXH6W9ey_h8LEx2lFxp5fg][Echecs - Blitzstream]]
+** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCJ-lNdTBFPx_5GAJFGpxPNQ][Châlons et son Agglo]]
+** [[https://linuxfr.org/forums.atom][LinuxFr.org : les forums]]
+** [[https://linuxfr.org/liens.atom][LinuxFr.org : les liens]]
+** [[https://podcasts.nova.fr/radio-nova-la-chronique-de-guillaume-meurice][]]
+** [[https://karl-voit.at/feeds/lazyblorg-all.atom_1.0.links-only.xml][public voit]]
+** [[http://feeds.feedburner.com/Techcrunch][Crunch Hype]]
+** [[http://news.ycombinator.com/rss][Hacker News]]
+** [[https://www.youtube.com/feeds/videos.xml?user=techguruuk][Dan Wood]]
+** [[https://www.youtube.com/feeds/videos.xml?user=ThuleanPerspective][]]
+** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCWedHS9qKebauVIK2J7383g][Underscore_]]
+** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCgt0kXLmnwTGDZZxASmqedA][Anthony WIRIG]]
+** [[http://endlessparentheses.com/atom.xml][Endless Parentheses]]
+** [[http://emacsrocks.com/atom.xml][Emacs Rocks!]]
+** [[https://www.xkcd.com/rss.xml][xkcd.com]]
+** [[https://www.reddit.com/r/emacs.rss][M-x emacs-reddit]]
+** [[https://emacstil.com/feed.xml][Emacs TIL]]
+** [[https://pinecast.com/feed/emacscast][EmacsCast]]
+** [[http://www.masteringemacs.org/feed/][Mastering Emacs]]
+** [[https://planet.emacslife.com/atom.xml][Planet Emacslife]]
+** [[http://emacs-fu.blogspot.com/feeds/posts/default][emacs-fu]]
+** [[http://www.emacswiki.org/emacs?action=rss][EmacsWiki: SiteMap]]
+** [[https://tilde.town/~ramin_hal9001/atom.xml][Ramin]]

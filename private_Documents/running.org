@@ -1,0 +1,14 @@
+#+AUTHOR: Xavier Maillard
+
+MAF Test: 1000 -> 05:32
+Course: 00:00:00 -> distance
+
+Age: 44
+Facteur: -10,-5,0,5,10
+FC MAF: 180 - age - facteur
+
+|| Estimations | Allure /km |
+|5K| 00:21:36 | 
+|10K
+|Semi
+|Marathon

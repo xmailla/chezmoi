@@ -1,0 +1,140 @@
+;;; Elfeed score file                                     -*- lisp -*-
+((version 10)
+ ("title"
+  (:text "startups" :value 2 :type W :comment "[ADAPTIVE:startups]")
+  (:text "Pourquoi" :value 2 :type W :comment "[ADAPTIVE:Pourquoi]")
+  (:text "started" :value -2 :type W :comment "[ADAPTIVE:started]")
+  (:text "Tuesday" :value -2 :type W :comment "[ADAPTIVE:Tuesday]")
+  (:text "League" :value -2 :type W :comment "[ADAPTIVE:League]")
+  (:text "Humans" :value -2 :type W :comment "[ADAPTIVE:Humans]")
+  (:text "version" :value 2 :type W :comment "[ADAPTIVE:version]")
+  (:text "fontaine" :value 2 :type W :comment "[ADAPTIVE:fontaine]")
+  (:text "Stavrou" :value 2 :type W :comment "[ADAPTIVE:Stavrou]")
+  (:text "Protesilaos" :value 2 :type W :comment
+		 "[ADAPTIVE:Protesilaos]")
+  (:text "ANNOUNCEMENT" :value -2 :type W :comment
+		 "[ADAPTIVE:ANNOUNCEMENT]")
+  (:text "August" :value -2 :type W :comment "[ADAPTIVE:August]")
+  (:text "discontinued" :value -2 :type W :comment
+		 "[ADAPTIVE:discontinued]")
+  (:text "devices" :value -2 :type W :comment "[ADAPTIVE:devices]")
+  (:text "Android" :value -2 :type W :comment "[ADAPTIVE:Android]")
+  (:text "Appstore" :value -2 :type W :comment "[ADAPTIVE:Appstore]")
+  (:text "Amazon" :value -2 :type W :comment "[ADAPTIVE:Amazon]")
+  (:text "environnement" :value -2 :type W :comment
+		 "[ADAPTIVE:environnement]")
+  (:text "trouve" :value -2 :type W :comment "[ADAPTIVE:trouve]")
+  (:text "Python" :value -2 :type W :comment "[ADAPTIVE:Python]")
+  (:text "single" :value -2 :type W :comment "[ADAPTIVE:single]")
+  (:text "avatars" :value -2 :type W :comment "[ADAPTIVE:avatars]")
+  (:text "Wonder" :value -2 :type W :comment "[ADAPTIVE:Wonder]")
+  (:text "Engineer" :value -2 :type W :comment "[ADAPTIVE:Engineer]")
+  (:text "Software" :value -2 :type W :comment "[ADAPTIVE:Software]")
+  (:text "Senior" :value -2 :type W :comment "[ADAPTIVE:Senior]")
+  (:text "Hiring" :value -2 :type W :comment "[ADAPTIVE:Hiring]")
+  (:text "Robotics" :value -2 :type W :comment "[ADAPTIVE:Robotics]")
+  (:text "Corvus" :value -2 :type W :comment "[ADAPTIVE:Corvus]")
+  (:text "promise" :value -2 :type W :comment "[ADAPTIVE:promise]")
+  (:text "Privacy" :value -2 :type W :comment "[ADAPTIVE:Privacy]")
+  (:text "Obscura" :value -2 :type W :comment "[ADAPTIVE:Obscura]")
+  (:text "Agents" :value -2 :type W :comment "[ADAPTIVE:Agents]")
+  (:text "Multimodal" :value -2 :type W :comment
+		 "[ADAPTIVE:Multimodal]")
+  (:text "Foundation" :value -2 :type W :comment
+		 "[ADAPTIVE:Foundation]")
+  (:text "généré" :value 2 :type W :comment "[ADAPTIVE:généré]")
+  (:text "contenu" :value 2 :type W :comment "[ADAPTIVE:contenu]")
+  (:text "plongée" :value 2 :type W :comment "[ADAPTIVE:plongée]")
+  (:text "sagesse" :value 2 :type W :comment "[ADAPTIVE:sagesse]")
+  (:text "Appearance" :value -4 :type W :comment
+		 "[ADAPTIVE:Appearance]")
+  (:text "Closing" :value -2 :type W :comment "[ADAPTIVE:Closing]")
+  (:text "record" :value -2 :type W :comment "[ADAPTIVE:record]")
+  (:text "Whisper" :value -2 :type W :comment "[ADAPTIVE:Whisper]")
+  (:text "workflow" :value -2 :type W :comment "[ADAPTIVE:workflow]")
+  (:text "Tweaking" :value -2 :type W :comment "[ADAPTIVE:Tweaking]")
+  (:text "repart" :value 2 :type W :comment "[ADAPTIVE:repart]")
+  (:text "brownie" :value 2 :type W :comment "[ADAPTIVE:brownie]")
+  (:text "Holidays" :value 4 :type W :comment "[ADAPTIVE:Holidays]")
+  (:text "réconfort" :value 2 :type W :comment "[ADAPTIVE:réconfort]")
+  (:text "complète" :value 6 :type W :comment "[ADAPTIVE:complète]")
+  (:text "gourmandise" :value 2 :type W :comment
+		 "[ADAPTIVE:gourmandise]")
+  (:text "Besoin" :value 2 :type W :comment "[ADAPTIVE:Besoin]")
+  (:text "Découvrez" :value 2 :type W :comment "[ADAPTIVE:Découvrez]")
+  (:text "caramel" :value 2 :type W :comment "[ADAPTIVE:caramel]")
+  (:text "Praliné" :value 2 :type W :comment "[ADAPTIVE:Praliné]")
+  (:text "CHOCOLAAAT" :value 2 :type W :comment
+		 "[ADAPTIVE:CHOCOLAAAT]")
+  (:text "décors" :value 2 :type W :comment "[ADAPTIVE:décors]")
+  (:text "Brioche" :value 2 :type W :comment "[ADAPTIVE:Brioche]")
+  (:text "holidayswithyoutube" :value 14 :type W :comment
+		 "[ADAPTIVE:holidayswithyoutube]")
+  (:text "chaîne" :value 10 :type W :comment "[ADAPTIVE:chaîne]")
+  (:text "fondre" :value 2 :type W :comment "[ADAPTIVE:fondre]")
+  (:text "mousse" :value 2 :type W :comment "[ADAPTIVE:mousse]")
+  (:text "recette" :value 10 :type W :comment "[ADAPTIVE:recette]")
+  (:text "Advocate" :value -2 :type W :comment "[ADAPTIVE:Advocate]")
+  (:text "Opensource" :value -2 :type W :comment
+		 "[ADAPTIVE:Opensource]")
+  (:text "Distro" :value -2 :type W :comment "[ADAPTIVE:Distro]")
+  (:text "Interview" :value -2 :type W :comment "[ADAPTIVE:Interview]")
+  (:text "symposium" :value 2 :type W :comment "[ADAPTIVE:symposium]")
+  (:text "philosophical" :value 2 :type W :comment
+		 "[ADAPTIVE:philosophical]")
+  (:text "orgmode" :value -2 :type W :comment "[ADAPTIVE:orgmode]")
+  (:text "videos" :value -2 :type W :comment "[ADAPTIVE:videos]")
+  (:text "course" :value -2 :type W :comment "[ADAPTIVE:course]")
+  (:text "advanced" :value -2 :type W :comment "[ADAPTIVE:advanced]")
+  (:text "months" :value -2 :type W :comment "[ADAPTIVE:months]")
+  (:text "intelligence" :value -2 :type W :comment
+		 "[ADAPTIVE:intelligence]")
+  (:text "within" :value -2 :type W :comment "[ADAPTIVE:within]")
+  (:text "Language" :value -2 :type W :comment "[ADAPTIVE:Language]")
+  (:text "Demonstration" :value -2 :type W :comment
+		 "[ADAPTIVE:Demonstration]")
+  (:text "linuxien" :value -2 :type W :comment "[ADAPTIVE:linuxien]")
+  (:text "penser" :value -2 :type W :comment "[ADAPTIVE:penser]")
+  (:text "Integration" :value -2 :type W :comment
+		 "[ADAPTIVE:Integration]")
+  (:text "Ollama" :value -2 :type W :comment "[ADAPTIVE:Ollama]")
+  (:text "LLM" :value -3 :type s) (:text "IA" :value -3 :type s)
+  (:text "python" :value 1 :type s)
+  (:text "Transformer" :value 10 :type s)
+  (:text "Summarization" :value -50 :type s))
+ ("content")
+ ("title-or-content"
+  (:text "Gender Bias" :title-value 50 :content-value 50 :type s)
+  (:text "BERT" :title-value 100 :content-value 50 :type S)
+  (:text "Generalization" :title-value 30 :content-value 20 :type s)
+  (:text "out-of-distribution" :title-value 20 :content-value 30 :type
+		 s)
+  (:text "language model" :title-value 20 :content-value 30 :type s))
+ ("tag")
+ ("authors"
+  (:text "Underscore_" :value 0 :type W :comment
+		 "[ADAPTIVE:Underscore_]")
+  (:text "FM jeffforever" :value -5 :type W :comment
+		 "[ADAPTIVE:FM jeffforever]")
+  (:text "IM JonasPradoLobo" :value -5 :type W :comment
+		 "[ADAPTIVE:IM JonasPradoLobo]")
+  (:text "serge_sans_paille" :value -5 :type W :comment
+		 "[ADAPTIVE:serge_sans_paille]")
+  (:text "Monsieur Phi" :value 5 :type W :comment
+		 "[ADAPTIVE:Monsieur Phi]")
+  (:text "Les secrets de Muriel" :value 45 :type W :comment
+		 "[ADAPTIVE:Les secrets de Muriel]")
+  (:text "Protesilaos Stavrou" :value 10 :type W :comment
+		 "[ADAPTIVE:Protesilaos Stavrou]")
+  (:text "netchaiev" :value -5 :type W :comment "[ADAPTIVE:netchaiev]")
+  (:text "James Dyer" :value -5 :type W :comment
+		 "[ADAPTIVE:James Dyer]")
+  (:text "Anthony WIRIG" :value 2 :type s)
+  (:text "Ploum" :value 2 :type s)
+  (:text "Percy Liang" :value 200 :type w)
+  (:text "Sebastian Ruder" :value 200 :type w))
+ ("feed"
+  (:text "https://www.laquadrature.net/feed/" :value 3 :type s :attr u)
+  (:text "https://lichess.org/blog/community.atom" :value 5 :type s
+		 :attr u))
+ ("link") ("udf") (mark nil) ("adjust-tags"))

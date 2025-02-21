@@ -1,0 +1,85 @@
+;;; Elfeed score rule stats file DO NOT EDIT       -*- lisp -*-
+(:version 1 :stats
+		  #s(hash-table test equal data
+						(#s(elfeed-score-feed-rule
+							"https://lichess.org/blog/community.atom"
+							5 s u nil nil)
+						   #s(elfeed-score-rule-stats 88
+													  1740085475.873819)
+						   #s(elfeed-score-title-or-content-rule
+							  "BERT" 100 50 S nil nil nil)
+						   #s(elfeed-score-rule-stats 7
+													  1739940147.111566)
+						   #s(elfeed-score-title-or-content-rule
+							  "language model" 20 30 s nil nil nil)
+						   #s(elfeed-score-rule-stats 26
+													  1740103971.21245)
+						   #s(elfeed-score-authors-rule "Ploum" 2 s
+														nil nil nil)
+						   #s(elfeed-score-rule-stats 35
+													  1739984976.758626)
+						   #s(elfeed-score-authors-rule
+							  "Anthony WIRIG" 2 s nil nil nil)
+						   #s(elfeed-score-rule-stats 76
+													  1740067371.392326)
+						   #s(elfeed-score-feed-rule
+							  "https://www.laquadrature.net/feed/" 3 s
+							  u nil nil)
+						   #s(elfeed-score-rule-stats 26
+													  1739940147.251474)
+						   #s(elfeed-score-title-rule "python" 1 s nil
+													  nil nil)
+						   #s(elfeed-score-rule-stats 22
+													  1740103971.216324)
+						   #s(elfeed-score-title-rule "IA" -3 s nil
+													  nil nil)
+						   #s(elfeed-score-rule-stats 141
+													  1740103974.69228)
+						   #s(elfeed-score-title-rule "LLM" -3 s nil
+													  nil nil)
+						   #s(elfeed-score-rule-stats 16
+													  1740103971.221273)
+						   #s(elfeed-score-title-or-content-rule
+							  "Generalization" 30 20 s nil nil nil)
+						   #s(elfeed-score-rule-stats 1
+													  1739993348.603988)
+						   #s(elfeed-score-title-rule "Ollama" -2 W
+													  nil nil
+													  "[ADAPTIVE:Ollama]")
+						   #s(elfeed-score-rule-stats 1
+													  1740027031.665521)
+						   #s(elfeed-score-title-rule "Hiring" -2 W
+													  nil nil
+													  "[ADAPTIVE:Hiring]")
+						   #s(elfeed-score-rule-stats 2
+													  1740103971.21555)
+						   #s(elfeed-score-title-rule "Multimodal" -2
+													  W nil nil
+													  "[ADAPTIVE:Multimodal]")
+						   #s(elfeed-score-rule-stats 1
+													  1740057580.837661)
+						   #s(elfeed-score-title-rule "Foundation" -2
+													  W nil nil
+													  "[ADAPTIVE:Foundation]")
+						   #s(elfeed-score-rule-stats 1
+													  1740057580.845869)
+						   #s(elfeed-score-authors-rule
+							  "Protesilaos Stavrou" 10 W nil nil
+							  "[ADAPTIVE:Protesilaos Stavrou]")
+						   #s(elfeed-score-rule-stats 1
+													  1740085474.835033)
+						   #s(elfeed-score-title-rule "Engineer" -2 W
+													  nil nil
+													  "[ADAPTIVE:Engineer]")
+						   #s(elfeed-score-rule-stats 1
+													  1740103971.215544)
+						   #s(elfeed-score-title-rule "Python" -2 W
+													  nil nil
+													  "[ADAPTIVE:Python]")
+						   #s(elfeed-score-rule-stats 1
+													  1740103971.216236)
+						   #s(elfeed-score-title-rule "Software" -2 W
+													  nil nil
+													  "[ADAPTIVE:Software]")
+						   #s(elfeed-score-rule-stats 1
+													  1740103971.221848))))

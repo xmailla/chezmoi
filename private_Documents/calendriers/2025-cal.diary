@@ -1,0 +1,25 @@
+%%(diary-float t 0 1) Argent de poche de Lubin ;; pocket money reminder
+
+%%(let ((dayname (calendar-day-of-week date))
+	   (day (cadr date)))
+	   (or (and (= day 20) (memq dayname '(1 2 3 4 5)))
+	   (and (memq day '(18 19)) (= dayname 5)))) Jours de paye. ; pay day
+
+ %%(diary-date t t 22 'prot-diary-calendar-administrative-mark)
+     Some administrative monthly task
+ %%(diary-anniversary 1980 2 21 'prot-diary-calendar-anniversary-mark)
+     Some anniversary is %d years
+	 
+2025-02-21 MAF60
+2025-02-21 Plop
+
+%%(diary-block 2025 02 19 2025 02 24) ASTREINTE
+
+%%(diary-block 2025 03 12 2025 03 15) Voyage à Séville
+
+%%(diary-block 2025 02 25 2025 02 27) Test de block
+
+2025-02-24
+	10:00		 rdv 1
+	14:00		 Reims Coeur de Ville
+	18:00		 kiné
