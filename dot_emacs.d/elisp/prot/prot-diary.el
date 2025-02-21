@@ -38,36 +38,11 @@
 (require 'diary-lib)
 (require 'prot-common)
 
-;;;; General utilities
-
 (defgroup prot-diary ()
   "Tweaks for the calendar and diary."
-  :group 'calendar)
+  :group 'diary)
 
-
-(defface prot-diary-calendar-anniversary-mark
-  '((((class color) (min-colors 88) (background light))
-     :background "#fff1f0" :foreground "#a60000")
-    (((class color) (min-colors 88) (background dark))
-     :background "#2c0614" :foreground "#ff8059")
-    (t :foreground "red"))
-  "Face to mark anniversaries in the calendar.")
-
-(defface prot-diary-calendar-administrative-mark
-  '((((class color) (min-colors 88) (background light))
-     :background "#fff3da" :foreground "#813e00")
-    (((class color) (min-colors 88) (background dark))
-     :background "#221000" :foreground "#eecc00")
-    (t :foreground "yellow"))
-  "Face to mark administrative tasks in the calendar.")
-
-(defface prot-diary-calendar-mundane-mark
-  '((((class color) (min-colors 88) (background light))
-     :background "#f0f0f0" :foreground "#505050")
-    (((class color) (min-colors 88) (background dark))
-     :background "#191a1b" :foreground "#a8a8a8")
-    (t :inherit shadow))
-  "Face to mark mundane tasks in the calendar.")
+;;;; Commands and utilities
 
 (defun prot-diary--list-entries (n inhibit)
   "Check for N days with diary entries.
@@ -76,48 +51,64 @@ When optional INHIBIT is non-nil, do not show thediary buffer."
         (hide (if inhibit t nil)))
     (diary-list-entries (calendar-current-date) n hide)))
 
-(defun prot-diary--mail-fn (n)
-  "Email diary entries for N days.
+(defvar prot-diary--current-window-configuration nil
+  "Current window configuration.")
 
-Alternative of `diary-mail-entries', meant as a subroutine of
-`prot-diary-mail-entries'.  Does not show the diary buffer after
-sending the email and does not send a mail when no entries are
-present (what is the point of first notifying me at my inbox and
-then telling me 'Oh, nothing of interest here'?)."
-  (if (string-equal diary-mail-addr "")
+(defvar prot-diary--current-window-configuration-point nil
+  "Point in current window configuration.")
+
+(defun prot-diary--store-window-configuration ()
+  "Store current window configuration and point."
+  (setq prot-diary--current-window-configuration (current-window-configuration))
+  (setq prot-diary--current-window-configuration-point (point)))
+
+(defun prot-diary--restore-window-configuration ()
+  "Restore `prot-diary--store-window-configuration'."
+  (when prot-diary--current-window-configuration
+    (set-window-configuration prot-diary--current-window-configuration))
+  (when prot-diary--current-window-configuration-point
+    (goto-char prot-diary--current-window-configuration-point)))
+
+(autoload 'message-goto-body "message")
+
+;;;###autoload
+(defun prot-diary-mail-entries (&optional ndays)
+  "Email diary entries for NDAYS or `diary-mail-days'.
+
+With optional DAYS as a positive integer, produce a list for N
+days including the current one (so 2 is today and tomorrow).
+Otherwise use `diary-mail-days'.
+
+Alternative of `diary-mail-entries'.  Does not show the diary
+buffer after sending the email and does not send a mail when no
+entries are present (what is the point of first notifying me at
+my inbox and then telling me 'Oh, nothing of interest here'?)."
+  (interactive "p")
+  (if (or (string-equal diary-mail-addr "")
+          (null diary-mail-addr))
       (user-error "You must set `diary-mail-addr' to use this command")
     (let ((entries)
-          (diary-display-function #'diary-fancy-display))
+          (diary-display-function #'diary-fancy-display)
+          (diary-mail-addr user-mail-address)
+          (mail-user-agent 'sendmail-user-agent)
+          (n (or ndays diary-mail-days)))
+      (prot-common-number-interger-positive-p n)
+      (prot-diary--store-window-configuration)
       (diary-list-entries (calendar-current-date) (or n diary-mail-days))
       (if (prot-diary--list-entries n t)
           (progn
             (with-current-buffer (get-buffer diary-fancy-buffer)
               (setq entries (buffer-string))
               (kill-buffer) ; FIXME 2021-04-13: `bury-buffer' does not bury it...
-              (delete-window))
+              (prot-diary--restore-window-configuration))
             (compose-mail diary-mail-addr
                           (concat "Diary entries generated "
-                                  (calendar-date-string (calendar-current-date))))
+                                  (calendar-date-string (calendar-current-date)))
+                          nil)
+            (message-goto-body)
             (insert entries)
-            (call-interactively (get mail-user-agent 'sendfunc)))
+            (funcall (get mail-user-agent 'sendfunc)))
         (message "No diary entries; skipping email delivery")))))
-
-;;;###autoload
-(defun prot-diary-mail-entries (&optional days)
-  "Mail to self diary entries.
-With optional DAYS as a positive integer, produce a list for N
-days including the current one (so 2 is today and tomorrow).
-Otherwise use `diary-mail-days'.
-
-This command uses `prot-diary--mail-fn' to do its job, which
-means that (i) it is will only send an email when there are diary
-entries to show for the specified day[s] and (ii) it will not
-display the diary buffer in another window as a side effect of
-sending the email."
-  (interactive "p")
-  (let ((n (or days diary-mail-days)))
-    (prot-common-number-interger-positive-p n)
-    (prot-diary--mail-fn n)))
 
 ;;;###autoload
 (defun prot-diary-display-entries (&optional days)
@@ -167,62 +158,101 @@ Otherwise use `diary-mail-days'."
   (newline)
   (insert (make-string 4 ?\s)))
 
+;;;; Fontification extras
+
+(defface prot-diary-calendar-anniversary-mark
+  '((((class color) (min-colors 88) (background light))
+     :background "#fff1f0" :foreground "#a60000")
+    (((class color) (min-colors 88) (background dark))
+     :background "#2c0614" :foreground "#ff8059")
+    (t :foreground "red"))
+  "Face to mark anniversaries in the calendar.")
+
+(defface prot-diary-calendar-administrative-mark
+  '((((class color) (min-colors 88) (background light))
+     :background "#fff3da" :foreground "#813e00")
+    (((class color) (min-colors 88) (background dark))
+     :background "#221000" :foreground "#eecc00")
+    (t :foreground "yellow"))
+  "Face to mark administrative tasks in the calendar.")
+
+(defface prot-diary-calendar-event-mark
+  '((((class color) (min-colors 88) (background light))
+     :background "#aceaac" :foreground "#004c00")
+    (((class color) (min-colors 88) (background dark))
+     :background "#00422a" :foreground "#9ff0cf")
+    (t :foreground "green"))
+  "Face to mark events in the calendar.")
+
+(defface prot-diary-calendar-mundane-mark
+  '((((class color) (min-colors 88) (background light))
+     :background "#f0f0f0" :foreground "#505050")
+    (((class color) (min-colors 88) (background dark))
+     :background "#191a1b" :foreground "#a8a8a8")
+    (t :inherit shadow))
+  "Face to mark mundane tasks in the calendar.")
+
 ;; I might expand this further, depending on my usage patterns and the
 ;; conventions I establish over time.
 (defconst prot-diary-font-lock-keywords
-  '((";;.*"
+  `((,(format "^%s?\\(%s\\)" (regexp-quote diary-nonmarking-symbol)
+              (regexp-quote diary-sexp-entry-symbol))
+     (1 'font-lock-constant-face t))
+    (diary-font-lock-sexps
+     (0 'font-lock-function-name-face t))
+    (,(format "^%s" (regexp-quote diary-nonmarking-symbol))
+     (0 'font-lock-negation-char-face t))
+    (,(format "%s.*" diary-comment-start)
      (0 'font-lock-comment-face)))
   "Rules for extra Diary fontification.")
 
-(defun prot-diary--fontify ()
-  "Font-lock setup for `prot-diary-font-lock-keywords'."
+(defvar outline-regexp)
+(defvar outline-heading-end-regexp)
+
+(defun prot-diary--outline-level ()
+  "Determine Outline heading level.
+To be assigned to the variable `outline-level'."
+  (let ((regexp "\\(;;+\\{2,\\}\\) [^ \t\n]"))
+    (looking-at regexp)
+    (- (- (match-end 1) (match-beginning 1)) 2)))
+
+(defun prot-diary--extras-setup ()
+  "Additional setup for Diary mode buffers.
+Applies `prot-diary-font-lock-keywords' and specifies what
+constitutes a heading for the purposes of Outline minor mode."
   (when (derived-mode-p 'diary-mode)
     (font-lock-flush (point-min) (point-max))
-    (font-lock-add-keywords nil prot-diary-font-lock-keywords t)))
+    (font-lock-add-keywords nil prot-diary-font-lock-keywords t)
+    (setq outline-regexp (format "%s+\\{2,\\} [^ \t\n]" diary-comment-start))
+    (setq outline-level #'prot-diary--outline-level)
+    (setq outline-heading-end-regexp (format "%s$" diary-comment-end))))
 
-(add-hook 'diary-mode-hook #'prot-diary--fontify)
+(add-hook 'diary-mode-hook #'prot-diary--extras-setup)
 
 (defconst prot-diary-date-pattern
   "^!?\\(\\([0-9]+\\|\\*\\)[-/]\\([0-9]+\\|\\*\\)[-/]\\([0-9]+\\|\\*\\)\\|%%\\)"
   "Date pattern found in my diary (NOT ALL POSSIBLE PATTERNS).")
 
-(defmacro prot-diary-date-motion (fn desc move-buf rx)
-  "Produce interactive commands to navigate custom bongo delimiters.
+;;;###autoload
+(defun prot-diary-heading-next (&optional arg)
+  "Move to next or optional ARGth Dired subdirectory heading.
+For more on such headings, read `dired-maybe-insert-subdir'."
+  (interactive "p")
+  (let ((heading prot-diary-date-pattern))
+    (goto-char (point-at-eol))
+    (re-search-forward heading nil t (or arg nil))
+    (goto-char (match-beginning 1))
+    (goto-char (point-at-bol))))
 
-FN is the resulting interactive function's name.  DESC is its doc
-string.  MOVE-BUF is a buffer search motion: it expects either
-`re-search-forward' or `re-search-backward'.  RX is the regular
-expression to search for."
-  (declare (indent defun))
-  `(defun ,fn ()
-     ,desc
-     (interactive)
-     (let ((line-motion (gensym)))
-       (pcase ,move-buf
-         ('re-search-forward (setq line-motion (point-at-eol)))
-         ('re-search-backward (setq line-motion (point-at-bol)))
-         (_ (error "Must specify a buffer motion for a regexp")))
-       (let ((section ,rx))
-         (when (progn
-                 (goto-char line-motion)
-                 (funcall ,move-buf section nil t))
-           (goto-char (point-at-bol)))))))
-
-(prot-diary-date-motion
-  prot-diary-heading-next
-  "Move to next diary date or sexp.
-NOTE: the date pattern does not cover all valid formats, but only
-those I use, per `prot-diary-date-pattern'."
-  're-search-forward
-  prot-diary-date-pattern)
-
-(prot-diary-date-motion
-  prot-diary-heading-previous
-  "Move to previous diary date or sexp.
-NOTE: the date pattern does not cover all valid formats, but only
-those I use, per `prot-diary-date-pattern'."
-  're-search-backward
-  prot-diary-date-pattern)
+;;;###autoload
+(defun prot-diary-heading-previous (&optional arg)
+  "Move to previous or optional ARGth Dired subdirectory heading.
+For more on such headings, read `dired-maybe-insert-subdir'."
+  (interactive "p")
+  (let ((heading prot-diary-date-pattern))
+    (goto-char (point-at-bol))
+    (re-search-backward heading nil t (or arg nil))
+    (goto-char (point-at-bol))))
 
 ;;;; Holidays
 

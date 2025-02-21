@@ -466,7 +466,8 @@
 (add-hook 'after-save-hook 'howm-mode-set-buffer-name)
 
 ;; GNU hyperbole
-
+(use-package remember
+  )
 (use-package hyperbole
   :init
   (hyperbole-mode 1)
@@ -478,86 +479,153 @@
 ;; MODES
 ;; Life
 ;; (info "(emacs) Calendar/Diary")
-(require 'calendar)
-(require 'diary-lib)
-(require 'french-holidays)
-(require 'appt)
-(require 'prot-diary)
+(use-package diary-lib
+  :custom
+  (diary-file (format-time-string (expand-file-name "%Y-cal.diary" "~/Documents/calendriers/")))
+  (diary-display-function #'diary-fancy-display)
+  (diary-date-forms diary-iso-date-forms)
 
-(setq diary-file (format-time-string (expand-file-name "diary-%Y" my/cache-directory)))
-(setq diary-display-function #'diary-fancy-display)
-(setq diary-date-forms diary-iso-date-forms)
-(setq diary-comment-start ";;")
-(setq diary-comment-end "")
-(setq diary-nonmarking-symbol "!")
+  ;; utile pour utiliser outline-mode dans le diary
+  (diary-comment-start ";;")
+  (diary-comment-end "")
+  (diary-nonmarking-symbol "!")
 
-(setq diary-header-line-format nil)
-(setq diary-list-include-blanks nil)
-(setq diary-number-of-entries 2)
-(setq diary-mail-days 2)
-(setq diary-abbreviated-year-flag nil)
+  (diary-header-line-format nil)
+  (diary-list-include-blanks nil)
+  (diary-number-of-entries 2)
+  (diary-mail-days 2)
+  (diary-abbreviated-year-flag nil)
+  (diary-show-holidays-flag t)
 
-(add-hook 'diary-list-entries-hook #'diary-include-other-diary-files)
-(add-hook 'diary-mark-entries-hook 'diary-mark-included-diary-files)
-(add-hook 'diary-list-entries-hook #'diary-sort-entries t)
-(add-hook 'calendar-today-visible-hook #'calendar-mark-today)
+  ;; pour l'envoi des entrées par mail
 
-(setq calendar-mode-line-format nil)
-(setq calendar-time-display-form
-      '(24-hours ":" minutes
-                 (when time-zone
-                   (format "(%s)" time-zone))))
+  :hook
+  (diary-list-entries . diary-include-other-diary-files)
+  (diary-mark-entries . diary-mark-included-diary-files)
+  ;; (diary-mode . #'goto-address-mode)
 
-(setq calendar-date-style 'iso)
-(setq calendar-date-display-form calendar-iso-date-display-form)
-(setq calendar-time-zone-style 'numeric)
-(setq calendar-week-start-day 1  	; lundi
-      calendar-day-name-array ["Dimanche" "Lundi" "Mardi" "Mercredi"
-                               "Jeudi" "Vendredi" "Samedi"]
-      calendar-month-name-array ["Janvier" "Février" "Mars" "Avril" "Mai"
-                                 "Juin" "Juillet" "Août" "Septembre"
-                                 "Octobre" "Novembre" "Décembre"])
-(setq calendar-holidays holiday-french-holidays)
-(setq diary-show-holidays-flag t)
-(setq diary-date-forms diary-american-date-forms)
-(setq calendar-mark-diary-entries-flag t
-      calendar-mark-holidays-flag t)	; affiche automatiquement les entrées diary et les vacances dans calendar
+  :config
+  (add-hook 'diary-list-entries-hook 'diary-sort-entries t) ;; FIXME
 
-(setq appt-display-diary nil)
-(setq appt-disp-window-function #'appt-disp-window)
-(setq appt-display-mode-line t)
-(setq appt-display-interval 3)
-(setq appt-audible nil)
-(setq appt-warning-time-regexp "appt \\([0-9]+\\)")
-(setq appt-message-warning-time 15)
-(appt-activate 1)
+  ;; :bind
+  ;; ((:map diary-mode-map
+  ;; 		 ("<M-return>" . #'prot-diary-newline-indent)
+  ;; 		 ("M-n" . #'prot-diary-heading-next)
+  ;; 		 ("M-p" . #'prot-diary-heading-previous)
+  ;; 		 ("C-c C-a" . #'prot-diary-align-timestamped-entries)))
 
-(let ((map calendar-mode-map))
-  (define-key map (kbd "s") #'calendar-sunrise-sunset)
-  (define-key map (kbd "l") #'lunar-phases)
-  (define-key map (kbd "i") nil) ; Org sets this, much to my chagrin
-  (define-key map (kbd "i a") #'diary-insert-anniversary-entry)
-  (define-key map (kbd "i c") #'diary-insert-cyclic-entry)
-  (define-key map (kbd "i d") #'diary-insert-entry) ; for current "day"
-  (define-key map (kbd "i i") #'diary-insert-entry) ; most common action, easier to type
-  (define-key map (kbd "i m") #'diary-insert-monthly-entry)
-  (define-key map (kbd "i w") #'diary-insert-weekly-entry)
-  (define-key map (kbd "i y") #'diary-insert-yearly-entry)
-  (define-key map (kbd "M-n") #'calendar-forward-month)
-  (define-key map (kbd "M-p") #'calendar-backward-month))
+  )
 
-(let ((map diary-mode-map))
-  (define-key map (kbd "<M-return>") #'prot-diary-newline-indent)
-  (define-key map (kbd "M-n") #'prot-diary-heading-next)
-  (define-key map (kbd "M-p") #'prot-diary-heading-previous)
-  (define-key map (kbd "C-c C-a") #'prot-diary-align-timestamped-entries))
-(let ((map global-map))
-  (define-key map (kbd "C-c d a") #'prot-diary-insert-appointment)
-  (define-key map (kbd "C-c d c") #'calendar)
-  (define-key map (kbd "C-c d d") #'prot-diary-display-entries)
-  (define-key map (kbd "C-c d e") #'prot-diary-edit-diary)
-  (define-key map (kbd "C-c d i") #'prot-diary-insert-entry)
-  (define-key map (kbd "C-c d m") #'prot-diary-mail-entries))
+(use-package calendar
+  :ensure nil
+  :init
+  (setq holiday-french-holidays
+		'((holiday-fixed 1 1 "Jour de l'an")
+		  (holiday-fixed 1 6 "Épiphanie")
+		  (holiday-fixed 2 2 "Chandeleur")
+		  (holiday-fixed 2 14 "Saint Valentin")
+		  (holiday-fixed 5 1 "Fête du travail")
+		  (holiday-fixed 5 8 "Commémoration de la capitulation de l'Allemagne en 1945")
+		  (holiday-fixed 6 21 "Fête de la musique")
+		  (holiday-fixed 7 14 "Fête nationale - Prise de la Bastille")
+		  (holiday-fixed 8 15 "Assomption (Religieux)")
+		  (holiday-fixed 11 11 "Armistice de 1918")
+		  (holiday-fixed 11 1 "Toussaint")
+		  (holiday-fixed 11 2 "Commémoration des fidèles défunts")
+		  (holiday-fixed 12 25 "Noël")
+          ;; fetes a date variable
+		  (holiday-easter-etc 0 "Pâques")
+          (holiday-easter-etc 1 "Lundi de Pâques")
+          (holiday-easter-etc 39 "Ascension")
+          (holiday-easter-etc 49 "Pentecôte")
+          (holiday-easter-etc -47 "Mardi gras")
+          (if (not (equal (calendar-nth-named-day -1 0 5 displayed-year)
+                          (caar (holiday-easter-etc 49))))
+              (holiday-float 5 0 -1 "Fête des mères")
+			(holiday-float 6 0 1 "Fête des mères"))
+		  ;; dernier dimanche de mai ou premier dimanche de juin si c'est le
+		  ;; même jour que la pentecôte TODO
+		  (holiday-float 6 0 3 "Fête des pères"))) ;; troisième dimanche de juin
+
+  :custom
+  (calendar-mode-line-format nil)
+  (calendar-time-display-form
+   '(24-hours ":" minutes
+              (when time-zone
+   				(format "(%s)" time-zone))))
+
+  (calendar-date-style 'iso)
+  (calendar-week-start-day 1)  	; dimanche
+  (calendar-day-name-array ["Dimanche" "Lundi" "Mardi" "Mercredi"
+   							"Jeudi" "Vendredi" "Samedi"])
+  (calendar-month-name-array ["Janvier" "Février" "Mars" "Avril" "Mai"
+							  "Juin" "Juillet" "Août" "Septembre"
+							  "Octobre" "Novembre" "Décembre"])
+  (calendar-holidays holiday-french-holidays)
+
+  (calendar-mark-diary-entries-flag t)
+  (calendar-mark-holidays-flag t)	; affiche automatiquement les entrées diary et les vacances dans calendar
+
+  :hook
+  (calendar-today-visible . calendar-mark-today)
+
+  :bind
+  (
+   :map calendar-mode-map
+   ("s" . calendar-sunrise-sunset)
+   ("l" . lunar-phases)
+   ("i" . nil) ; Org sets this, much to my chagrin (see `remove-hook' above)
+   ("i a" . diary-insert-anniversary-entry)
+   ("i b" . diary-insert-block-entry)
+   ("i c" . diary-insert-cyclic-entry)
+   ("i d" . diary-insert-entry) ; for current "day"
+   ("i i" . diary-insert-entry) ; most common action, easier to type
+   ("i m" . diary-insert-monthly-entry)
+   ("i w" . diary-insert-weekly-entry)
+   ("i y" . diary-insert-yearly-entry)
+   ("M-n" . calendar-forward-month)
+   ("M-p" . calendar-backward-month))
+
+  )
+
+
+(use-package appt
+  :ensure nil
+  :custom
+  (appt-display-diary nil)
+  (appt-disp-window-function #'appt-disp-window)
+  (appt-display-mode-line t)
+  (appt-display-interval 3)
+  (appt-audible nil)
+  (appt-warning-time-regexp "appt \\([0-9]+\\)")
+  (appt-message-warning-time 15)
+
+  :config
+  (appt-activate 1))
+
+(use-package prot-diary
+  :ensure nil
+  :bind
+  ((:map diary-mode-map
+		 ("<M-return>" . #'prot-diary-newline-indent)
+		 ("M-n" . #'prot-diary-heading-next)
+		 ("M-p" . #'prot-diary-heading-previous)
+		 ("C-c C-a" . #'prot-diary-align-timestamped-entries)
+		 :map diary-mode-map
+		 ("<M-return>" . #'prot-diary-newline-indent)
+		 ("M-n" . #'prot-diary-heading-next)
+		 ("M-p" . #'prot-diary-heading-previous)
+		 ("C-c C-a" . #'prot-diary-align-timestamped-entries)
+		 :map global-map
+		 ("C-c d a" . #'prot-diary-insert-appointment)
+		 ("C-c d c" . #'calendar)
+		 ("C-c d d" . #'prot-diary-display-entries)
+		 ("C-c d e" . #'prot-diary-edit-diary)
+		 ("C-c d i" . #'prot-diary-insert-entry)
+		 ("C-c d m" . #'prot-diary-mail-entries)))
+  )
+
+
 
 ;; which-key
 (use-package which-key
